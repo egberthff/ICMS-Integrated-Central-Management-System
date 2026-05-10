@@ -1,0 +1,29 @@
+ ERROR - 2026-05-09 18:17:19 --> Resolve dashboard congif path Array
+(
+    [view] => employee/dashboard
+    [title] => Employee Dashboard
+)
+
+ERROR - 2026-05-09 18:17:29 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [username] => jane.doe@company.com
+    [active_role] => employee
+    [is_critical] => 
+    [permissions] => Array
+        (
+            [0] => profile:read
+            [1] => timesheet:submit
+        )
+
+    [mfa_verified_at] => 
+    [iat] => 1778350522
+    [exp] => 1778354122
+)
+
+ERROR - 2026-05-09 18:17:30 --> Resolve dashboard congif path Array
+(
+    [view] => admin/dashboard
+    [title] => Admin Dashboard
+)
+

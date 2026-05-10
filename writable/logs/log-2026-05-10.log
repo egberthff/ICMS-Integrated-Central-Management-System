@@ -1,0 +1,108 @@
+ERROR - 2026-05-10 03:32:20 --> Resolve dashboard congif path Array
+(
+    [view] => employee/dashboard
+    [title] => Employee Dashboard
+)
+
+ERROR - 2026-05-10 03:32:29 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [username] => jane.doe@company.com
+    [active_role] => employee
+    [is_critical] => 
+    [permissions] => Array
+        (
+            [0] => profile:read
+            [1] => timesheet:submit
+        )
+
+    [mfa_verified_at] => 
+    [iat] => 1778383939
+    [exp] => 1778387539
+)
+
+ERROR - 2026-05-10 03:32:30 --> Resolve dashboard congif path Array
+(
+    [view] => dashboard
+    [title] => Dashboard
+)
+
+ERROR - 2026-05-10 03:33:00 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 03:32:29
+    [iat] => 1778383949
+    [exp] => 1778387549
+)
+
+ERROR - 2026-05-10 03:33:02 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 03:32:29
+    [iat] => 1778383949
+    [exp] => 1778387549
+)
+
+ERROR - 2026-05-10 03:33:09 --> Resolve dashboard congif path Array
+(
+    [view] => employee/dashboard
+    [title] => Employee Dashboard
+)
+
+ERROR - 2026-05-10 03:33:21 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => employee
+    [is_critical] => 
+    [permissions] => Array
+        (
+            [0] => profile:read
+            [1] => timesheet:submit
+        )
+
+    [mfa_verified_at] => 
+    [iat] => 1778383982
+    [exp] => 1778387582
+)
+
+ERROR - 2026-05-10 03:33:22 --> Resolve dashboard congif path Array
+(
+    [view] => admin/dashboard
+    [title] => Admin Dashboard
+)
+
+ERROR - 2026-05-10 03:33:32 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => payroll_admin
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => payroll:execute
+        )
+
+    [mfa_verified_at] => 2026-05-10 03:33:21
+    [iat] => 1778384001
+    [exp] => 1778387601
+)
+
+ERROR - 2026-05-10 03:33:33 --> Resolve dashboard congif path Array
+(
+    [view] => dashboard
+    [title] => Dashboard
+)
+
