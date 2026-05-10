@@ -33,7 +33,8 @@ $routes->group('api/v1/employee', ['filter' => 'rbac:timesheet|submit'], functio
 });
 
 // Admin API Routes
-$routes->group('api/v1/admin', [], function($routes) {
+// $routes->group('api/v1/admin', [], function($routes) {
+$routes->group('api/v1/admin', ['filter' => 'rbac:admin|manage'], function($routes) {
     // User Management
     $routes->get('users', 'AdminController::listUsers');
     $routes->post('users/create', 'AdminController::createUser');

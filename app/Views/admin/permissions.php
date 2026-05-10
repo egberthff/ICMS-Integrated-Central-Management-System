@@ -72,7 +72,7 @@
             if (response.ok && response.data) {
                 tbody.innerHTML = '';
                 
-                for (const perm of response.data) {
+                for (const perm of response.data.data) {
                     const rolesUsing = await getPermissionRoles(perm.permission_id);
                     
                     const row = `
@@ -108,7 +108,7 @@
             const rolesUsing = [];
             
             if (response.ok && response.data) {
-                for (const role of response.data) {
+                for (const role of response.data.data) {
                     const permsResponse = await apiCall(`/api/v1/admin/roles/${role.role_id}/permissions`, 'GET');
                     if (permsResponse.ok && permsResponse.data.permissions.some(p => p.permission_id === permissionId)) {
                         rolesUsing.push(role.role_name);

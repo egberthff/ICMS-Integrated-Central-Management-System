@@ -106,3 +106,1188 @@ ERROR - 2026-05-10 03:33:33 --> Resolve dashboard congif path Array
     [title] => Dashboard
 )
 
+ERROR - 2026-05-10 08:41:06 --> Resolve dashboard congif path Array
+(
+    [view] => employee/dashboard
+    [title] => Employee Dashboard
+)
+
+ERROR - 2026-05-10 08:41:20 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [username] => jane.doe@company.com
+    [active_role] => employee
+    [is_critical] => 
+    [permissions] => Array
+        (
+            [0] => profile:read
+            [1] => timesheet:submit
+        )
+
+    [mfa_verified_at] => 
+    [iat] => 1778402466
+    [exp] => 1778406066
+)
+
+ERROR - 2026-05-10 08:41:22 --> Resolve dashboard congif path Array
+(
+    [view] => dashboard
+    [title] => Dashboard
+)
+
+ERROR - 2026-05-10 09:44:46 --> Resolve dashboard congif path Array
+(
+    [view] => employee/dashboard
+    [title] => Employee Dashboard
+)
+
+ERROR - 2026-05-10 09:48:14 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [username] => jane.doe@company.com
+    [active_role] => employee
+    [is_critical] => 
+    [permissions] => Array
+        (
+            [0] => profile:read
+            [1] => timesheet:submit
+        )
+
+    [mfa_verified_at] => 
+    [iat] => 1778406286
+    [exp] => 1778409886
+)
+
+ERROR - 2026-05-10 09:48:26 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [username] => jane.doe@company.com
+    [active_role] => employee
+    [is_critical] => 
+    [permissions] => Array
+        (
+            [0] => profile:read
+            [1] => timesheet:submit
+        )
+
+    [mfa_verified_at] => 
+    [iat] => 1778406286
+    [exp] => 1778409886
+)
+
+ERROR - 2026-05-10 09:48:27 --> Resolve dashboard congif path Array
+(
+    [view] => dashboard
+    [title] => Dashboard
+)
+
+ERROR - 2026-05-10 09:48:28 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:48:28 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:48:29 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:48:31 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:51:51 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:52:45 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:53:27 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:53:58 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:54:16 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:54:17 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:54:17 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:54:17 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:54:27 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:55:11 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:55:11 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:55:11 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:55:12 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:55:13 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:55:39 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:55:39 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:55:39 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:55:39 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:55:41 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:56:02 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:56:03 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:56:03 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:56:03 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:56:05 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:56:10 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:56:10 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:56:11 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:56:11 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:56:11 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:56:19 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:57:18 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:57:19 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:57:19 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:57:19 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:57:22 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:57:34 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:20 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:21 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:21 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:21 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:22 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:22 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:22 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:22 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:23 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:23 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:23 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:23 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:23 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:24 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:24 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:24 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:24 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:30 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:31 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:31 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:31 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:31 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:32 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:32 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:32 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:32 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:32 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:33 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:33 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:33 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:33 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:34 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:34 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+
+ERROR - 2026-05-10 09:58:34 --> Decoded token in RbacFilter: stdClass Object
+(
+    [sub] => usr_987654321
+    [active_role] => admin_manage
+    [is_critical] => 1
+    [permissions] => Array
+        (
+            [0] => admin:manage
+        )
+
+    [mfa_verified_at] => 2026-05-10 09:48:26
+    [iat] => 1778406506
+    [exp] => 1778410106
+)
+

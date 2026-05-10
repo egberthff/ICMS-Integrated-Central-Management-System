@@ -102,7 +102,7 @@
             if (response.ok && response.data) {
                 tbody.innerHTML = '';
                 
-                for (const role of response.data) {
+                for (const role of response.data.data) {
                     const permsResponse = await apiCall(`/api/v1/admin/roles/${role.role_id}/permissions`, 'GET');
                     const permissions = permsResponse.ok ? permsResponse.data.permissions.map(p => p.permission_key).join(', ') : '-';
                     
@@ -145,7 +145,7 @@
             select.innerHTML = '<option value="">Select a permission</option>';
             
             if (response.ok && response.data) {
-                for (const perm of response.data) {
+                for (const perm of response.data.data) {
                     select.innerHTML += `<option value="${perm.permission_id}">${perm.permission_key}</option>`;
                 }
             }

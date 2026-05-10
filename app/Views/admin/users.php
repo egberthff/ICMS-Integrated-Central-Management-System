@@ -97,11 +97,9 @@
             
             if (response.ok && response.data) {
                 tbody.innerHTML = '';
-                
-                for (const user of response.data) {
+                for (const user of response.data.data) {
                     const rolesResponse = await apiCall(`/api/v1/admin/users/${user.user_id}/roles`, 'GET');
                     const roles = rolesResponse.ok ? rolesResponse.data.roles.map(r => r.role_name).join(', ') : '-';
-                    
                     const row = `
                         <tr>
                             <td>${user.username}</td>
@@ -136,9 +134,8 @@
             const response = await apiCall('/api/v1/admin/roles', 'GET');
             const select = document.getElementById('assignRoleSelect');
             select.innerHTML = '<option value="">Select a role</option>';
-            
             if (response.ok && response.data) {
-                for (const role of response.data) {
+                for (const role of response.data.data) {
                     select.innerHTML += `<option value="${role.role_id}">${role.role_name}</option>`;
                 }
             }
