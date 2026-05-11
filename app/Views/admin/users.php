@@ -83,7 +83,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="assignRole()">Assign Role</button>
+                <button type="button" class="btn btn-primary">Assign Role</button>
             </div>
         </div>
     </div>
@@ -110,8 +110,11 @@
                                 </span>
                             </td>
                             <td>
-                                <button class="btn btn-sm btn-info" onclick="openAssignRoleModal('${user.user_id}', '${user.username}')">
+                                <button class="btn btn-sm btn-info" data-action="assign" onclick="openAssignRoleModal('${user.user_id}', '${user.username}')">
                                     <i class="bi bi-plus"></i> Add Role
+                                </button>
+                                <button class="btn btn-sm btn-warning" data-action="revoke" onclick="openAssignRoleModal('${user.user_id}', '${user.username}')">
+                                    <i class="bi bi-dash"></i> Remove Role
                                 </button>
                                 <button class="btn btn-sm btn-danger" onclick="deleteUser('${user.user_id}')">
                                     <i class="bi bi-trash"></i>
@@ -129,14 +132,31 @@
         }
     }
 
-    async function loadRolesForAssignment() {
+    async function loadRolesForAssignment(filter) {
         try {
             const response = await apiCall('/api/v1/admin/roles', 'GET');
             const select = document.getElementById('assignRoleSelect');
             select.innerHTML = '<option value="">Select a role</option>';
+            const userId = document.getElementById('assignUserId').value;
+            const userRolesResponse = await apiCall(`/api/v1/admin/users/${userId}/roles`, 'GET');
+            
             if (response.ok && response.data) {
-                for (const role of response.data.data) {
-                    select.innerHTML += `<option value="${role.role_id}">${role.role_name}</option>`;
+                if (filter === 'assign') {
+                    // For assigning, show all roles
+                    const existingRoleNames = userRolesResponse.data.roles.map(ur => ur.role_name);
+                    const availableRoles = response.data.data.filter(role => 
+                        !existingRoleNames.includes(role.role_name)
+                    );
+                    for (const role of availableRoles) {
+                        select.innerHTML += `<option value="${role.role_id}">${role.role_name}</option>`;
+                    }
+                } else if (filter === 'revoke') {
+                    // For revoking, show only roles the user currently has
+                    if (userRolesResponse.ok && userRolesResponse.data) {
+                        for (const role of userRolesResponse.data.roles) {
+                            select.innerHTML += `<option value="${role.role_id}">${role.role_name}</option>`;
+                        }
+                    }
                 }
             }
         } catch (error) {
@@ -146,9 +166,16 @@
 
     function openAssignRoleModal(userId, username) {
         document.getElementById('assignUserId').value = userId;
-        loadRolesForAssignment();
+        const action = event.target.getAttribute('data-action') || 'assign'; // Default to assign if not specified
+        loadRolesForAssignment(action);
         const modal = new bootstrap.Modal(document.getElementById('assignRoleModal'));
         modal.show();
+        // const action = event.target.getAttribute('data-action') || 'assign'; // Default to assign if not specified
+        const assignButton = document.querySelector('#assignRoleModal .btn-primary');
+        assignButton.textContent = action === 'assign' ? 'Assign Role' : 'Remove Role';
+        assignButton.setAttribute('onclick', `assignRole('${action}')`);
+        const modalTitle = document.querySelector('#assignRoleModal .modal-title');
+        modalTitle.textContent = `${action === 'assign' ? 'Assign' : 'Remove'} Role for ${username}`;
     }
 
     async function createUser() {
@@ -179,7 +206,7 @@
         }
     }
 
-    async function assignRole() {
+    async function assignRole(action) {
         const userId = document.getElementById('assignUserId').value;
         const roleId = document.getElementById('assignRoleSelect').value;
 
@@ -189,17 +216,17 @@
         }
 
         try {
-            const response = await apiCall('/api/v1/admin/roles/assign', 'POST', {
+            const response = await apiCall(`/api/v1/admin/roles/${action}`, 'POST', {
                 user_id: userId,
                 role_id: roleId
             });
 
             if (response.ok) {
-                showAlert('Role assigned successfully!', 'success');
+                showAlert(`Role ${action === 'assign' ? 'assigned' : 'removed'} successfully!`, 'success');
                 bootstrap.Modal.getInstance(document.getElementById('assignRoleModal')).hide();
                 loadUsers();
             } else {
-                showAlert(response.data.message || 'Failed to assign role', 'danger');
+                showAlert(response.data.message || 'Failed to ' + action + ' role', 'danger');
             }
         } catch (error) {
             showAlert('Error: ' + error.message, 'danger');

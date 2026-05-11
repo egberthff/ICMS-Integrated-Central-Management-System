@@ -66,37 +66,27 @@
                         <h5 class="text-white"><i class="bi bi-shield-lock"></i> ICMS</h5>
                     </div>
                     <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link <?= (strpos(current_url(), '/dashboard') !== false) ? 'active' : '' ?>" href="/dashboard">
-                                <i class="bi bi-house-door"></i> Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link <?= (strpos(current_url(), '/admin/users') !== false) ? 'active' : '' ?>" href="/admin/users">
-                                <i class="bi bi-people"></i> Users
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link <?= (strpos(current_url(), '/admin/roles') !== false) ? 'active' : '' ?>" href="/admin/roles">
-                                <i class="bi bi-shield-check"></i> Roles
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link <?= (strpos(current_url(), '/admin/permissions') !== false) ? 'active' : '' ?>" href="/admin/permissions">
-                                <i class="bi bi-lock"></i> Permissions
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link <?= (strpos(current_url(), '/switch_role') !== false) ? 'active' : '' ?>" href="/switch-role">
-                                <i class="bi bi-lock"></i> Switch Role
-                            </a>
-                        </li>
-                        <hr class="bg-secondary">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" onclick="logout()">
-                                <i class="bi bi-box-arrow-right"></i> Logout
-                            </a>
-                        </li>
+                        <?php
+                        $menus = $menus ?? [];
+                        foreach ($menus as $menu):
+                            // Handle separator type menus
+                            if (isset($menu['type']) && $menu['type'] === 'separator'):
+                        ?>
+                                <hr class="bg-secondary my-2">
+                        <?php
+                            else:
+                        ?>
+                                <li class="nav-item">
+                                    <a class="nav-link <?= (strpos(current_url(), $menu['url']) !== false) ? 'active' : '' ?>" 
+                                       href="<?= $menu['url'] ?? '#' ?>"
+                                       <?php if (isset($menu['onclick'])): ?>onclick="<?= $menu['onclick'] ?>"<?php endif; ?>>
+                                        <i class="<?= $menu['icon'] ?? '' ?>"></i> <?= $menu['label'] ?? '' ?>
+                                    </a>
+                                </li>
+                        <?php
+                            endif;
+                        endforeach;
+                        ?>
                     </ul>
                 </div>
             </nav>

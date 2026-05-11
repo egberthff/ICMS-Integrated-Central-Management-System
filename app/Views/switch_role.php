@@ -61,7 +61,7 @@
                      },
                 body: JSON.stringify({
                      target_role: roleName,
-                     mfa_token: '123456'
+                     mfa_token: '123456' // In a real implementation, you would prompt the user for an MFA token if the target role is critical
                      })
             });
 

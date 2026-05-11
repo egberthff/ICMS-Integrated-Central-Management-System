@@ -116,8 +116,11 @@
                             </td>
                             <td>${permissions || 'No permissions'}</td>
                             <td>
-                                <button class="btn btn-sm btn-info" onclick="openAssignPermissionModal('${role.role_id}', '${role.role_name}')">
+                                <button class="btn btn-sm btn-info" data-action="assign" onclick="openAssignPermissionModal('${role.role_id}', '${role.role_name}')">
                                     <i class="bi bi-plus"></i> Add Permission
+                                </button>
+                                 <button class="btn btn-sm btn-warning" data-action="revoke" onclick="openAssignPermissionModal('${role.role_id}', '${role.role_name}')">
+                                    <i class="bi bi-dash"></i> Remove Permission
                                 </button>
                             </td>
                         </tr>
@@ -159,6 +162,14 @@
         loadPermissionsForAssignment();
         const modal = new bootstrap.Modal(document.getElementById('assignPermissionModal'));
         modal.show();
+        const action = event.target.getAttribute('data-action') || 'assign'; // Default to assign if not specified
+        document.querySelector('#assignPermissionModal .modal-title').textContent = action === 'assign' 
+            ? `Assign Permission to ${roleName}` 
+            : `Remove Permission from ${roleName}`;
+        document.querySelector('#assignPermissionModal button.btn-primary').textContent = action === 'assign' 
+            ? 'Assign Permission' 
+            : 'Remove Permission';
+        document.querySelector('#assignPermissionModal button.btn-primary').setAttribute('onclick', `assignPermission('${action}')`);
     }
 
     async function createRole() {
@@ -189,7 +200,7 @@
         }
     }
 
-    async function assignPermission() {
+    async function assignPermission(action) {
         const roleId = document.getElementById('assignRoleId').value;
         const permissionId = document.getElementById('assignPermissionSelect').value;
 
@@ -199,17 +210,17 @@
         }
 
         try {
-            const response = await apiCall('/api/v1/admin/permissions/assign', 'POST', {
+            const response = await apiCall(`/api/v1/admin/permissions/${action}`, 'POST', {
                 role_id: roleId,
                 permission_id: permissionId
             });
 
             if (response.ok) {
-                showAlert('Permission assigned successfully!', 'success');
+                showAlert(`Permission ${action}ed successfully!`, 'success');
                 bootstrap.Modal.getInstance(document.getElementById('assignPermissionModal')).hide();
                 loadRoles();
             } else {
-                showAlert(response.data.message || 'Failed to assign permission', 'danger');
+                showAlert(response.data.message || `Failed to ${action} permission`, 'danger');
             }
         } catch (error) {
             showAlert('Error: ' + error.message, 'danger');

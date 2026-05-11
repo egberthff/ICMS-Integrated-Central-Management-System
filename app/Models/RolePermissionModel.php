@@ -23,10 +23,11 @@ class RolePermissionModel extends Model
             return false; // Already assigned
         }
 
-        return $this->insert([
+        $result = $this->insert([
             'role_id'       => $roleId,
             'permission_id' => $permissionId
         ]);
+        return $result !== false;
     }
 
     // Remove a permission from a role

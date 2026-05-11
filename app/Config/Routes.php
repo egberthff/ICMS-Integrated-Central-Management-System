@@ -13,9 +13,13 @@ $routes->post('/login', 'AuthController::login');
 // UI Routes (Protected)
 $routes->get('/switch-role', 'PageController::switchRole');
 $routes->get('/dashboard', 'PageController::dashboard');
-$routes->get('/admin/users', 'PageController::users');
-$routes->get('/admin/roles', 'PageController::roles');
-$routes->get('/admin/permissions', 'PageController::permissions');
+
+// $routes->group('admin', ['filter' => 'rbac:admin|manage'], function($routes){
+    $routes->get('admin/users', 'PageController::users');
+    $routes->get('admin/roles', 'PageController::roles');
+    $routes->get('admin/permissions', 'PageController::permissions');
+// });
+ 
 $routes->get('user/(:segment)/roles', 'AdminController::getUserRoles/$1');
 
 // Auth API Routes
@@ -33,7 +37,6 @@ $routes->group('api/v1/employee', ['filter' => 'rbac:timesheet|submit'], functio
 });
 
 // Admin API Routes
-// $routes->group('api/v1/admin', [], function($routes) {
 $routes->group('api/v1/admin', ['filter' => 'rbac:admin|manage'], function($routes) {
     // User Management
     $routes->get('users', 'AdminController::listUsers');

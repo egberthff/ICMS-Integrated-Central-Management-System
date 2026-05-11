@@ -51,7 +51,7 @@
                 <p class="mb-0">Identity & Credential Management System</p>
             </div>
             <div class="card-body p-4">
-                <form id="loginForm">
+                <form id="loginForm" method="POST" action="/login">
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
                         <input type="text" class="form-control" id="username" placeholder="jane.doe@company.com" required>
@@ -115,12 +115,6 @@
             }
         });
 
-        // Redirect if already logged in
-        window.addEventListener('load', function() {
-            if (localStorage.getItem('authToken')) {
-                window.location.href = '/dashboard';
-            }
-        });
     </script>
 </body>
 </html>
