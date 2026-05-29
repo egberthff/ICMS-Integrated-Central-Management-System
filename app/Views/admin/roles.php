@@ -7,7 +7,8 @@
         <h2>Roles Management</h2>
     </div>
     <div class="col-md-6 text-end">
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createRoleModal">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-action="add" data-bs-target="#createRoleModal"
+            onclick="openManageRoleModal(null, null, this)">
             <i class="bi bi-plus-circle"></i> Create Role
         </button>
     </div>
@@ -46,7 +47,8 @@
                 <form id="createRoleForm">
                     <div class="mb-3">
                         <label for="roleName" class="form-label">Role Name</label>
-                        <input type="text" class="form-control" id="roleName" placeholder="e.g., admin, manager" required>
+                        <input type="text" class="form-control" id="roleName" placeholder="e.g., admin, manager"
+                            required>
                     </div>
                     <div class="mb-3">
                         <label for="criticalityLevel" class="form-label">Criticality Level</label>
@@ -60,7 +62,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="createRole()">Create Role</button>
+                <button type="button" class="btn btn-primary">Create Role</button>
             </div>
         </div>
     </div>
@@ -98,14 +100,14 @@
         try {
             const response = await apiCall('/api/v1/admin/roles', 'GET');
             const tbody = document.getElementById('rolesTableBody');
-            
+
             if (response.ok && response.data) {
                 tbody.innerHTML = '';
-                
-                for (const role of response.data.data) {
+
+                for (const role of response.data.data.roles) {
                     const permsResponse = await apiCall(`/api/v1/admin/roles/${role.role_id}/permissions`, 'GET');
-                    const permissions = permsResponse.ok ? permsResponse.data.permissions.map(p => p.permission_key).join(', ') : '-';
-                    
+                    const permissions = permsResponse.ok ? permsResponse.data.data.permissions.map(p => p.permission_key).join(', ') : '-';
+
                     const row = `
                         <tr>
                             <td><strong>${role.role_name}</strong></td>
@@ -121,6 +123,12 @@
                                 </button>
                                  <button class="btn btn-sm btn-warning" data-action="revoke" onclick="openAssignPermissionModal('${role.role_id}', '${role.role_name}')">
                                     <i class="bi bi-dash"></i> Remove Permission
+                                </button>
+                                <button class="btn btn-sm btn-success" data-action="edit" data-bs-toggle="modal" data-bs-target="#createRoleModal" onclick="openManageRoleModal('${role.role_id}', '${role.role_name}', this)">
+                                    <i class="bi bi-plus"></i> Edit
+                                </button>
+                                 <button class="btn btn-sm btn-danger" data-action="delete" onclick="saveRole('delete','${role.role_id}')">
+                                    <i class="bi bi-trash"></i> Remove role
                                 </button>
                             </td>
                         </tr>
@@ -146,9 +154,9 @@
             const response = await apiCall('/api/v1/admin/permissions', 'GET');
             const select = document.getElementById('assignPermissionSelect');
             select.innerHTML = '<option value="">Select a permission</option>';
-            
-            if (response.ok && response.data) {
-                for (const perm of response.data.data) {
+
+            if (response.ok && response.data.data) {
+                for (const perm of response.data.data.permissions) {
                     select.innerHTML += `<option value="${perm.permission_id}">${perm.permission_key}</option>`;
                 }
             }
@@ -163,37 +171,75 @@
         const modal = new bootstrap.Modal(document.getElementById('assignPermissionModal'));
         modal.show();
         const action = event.target.getAttribute('data-action') || 'assign'; // Default to assign if not specified
-        document.querySelector('#assignPermissionModal .modal-title').textContent = action === 'assign' 
-            ? `Assign Permission to ${roleName}` 
+        document.querySelector('#assignPermissionModal .modal-title').textContent = action === 'assign'
+            ? `Assign Permission to ${roleName}`
             : `Remove Permission from ${roleName}`;
-        document.querySelector('#assignPermissionModal button.btn-primary').textContent = action === 'assign' 
-            ? 'Assign Permission' 
+        document.querySelector('#assignPermissionModal button.btn-primary').textContent = action === 'assign'
+            ? 'Assign Permission'
             : 'Remove Permission';
         document.querySelector('#assignPermissionModal button.btn-primary').setAttribute('onclick', `assignPermission('${action}')`);
     }
 
-    async function createRole() {
+    function openManageRoleModal(roleId = null, roleName = null, el) {
+        const action = el ? el.dataset.action : 'add';
+        const modalTitle = document.querySelector('#createRoleModal .modal-title');
+        const submitBtn = document.querySelector('#createRoleModal .btn-primary');
+        document.getElementById('roleName').value = roleName;
+
+        if (action === 'add') {
+            modalTitle.textContent = "Create New Role";
+            submitBtn.textContent = "Create Role";
+            submitBtn.setAttribute('onclick', `saveRole('${action}')`);
+
+        } else if (action === 'edit') {
+            modalTitle.textContent = "Edit Role";
+            submitBtn.textContent = "Update Role";
+            submitBtn.setAttribute('onclick', `saveRole('${action}', '${roleId}')`);
+
+        }
+    }
+
+
+    async function saveRole(action, roleId = null) {
         const roleName = document.getElementById('roleName').value;
         const criticalityLevel = document.getElementById('criticalityLevel').value;
 
-        if (!roleName) {
-            showAlert('Please fill all fields', 'warning');
-            return;
+        if (action !== 'delete') {
+            if (!roleName) {
+                showAlert('Please fill all fields', 'warning');
+                return;
+            }
+        }
+
+        const payload = {
+            role_name: roleName,
+            criticality_level: parseInt(criticalityLevel),
+            action: action
+        };
+
+        if ((action === 'edit' || action === 'delete') && roleId) {
+            payload.role_id = roleId;
         }
 
         try {
-            const response = await apiCall('/api/v1/admin/roles/create', 'POST', {
-                role_name: roleName,
-                criticality_level: parseInt(criticalityLevel)
-            });
+            const response = await apiCall('/api/v1/admin/roles/save', 'POST', payload);
 
             if (response.ok) {
-                showAlert('Role created successfully!', 'success');
-                document.getElementById('createRoleForm').reset();
-                bootstrap.Modal.getInstance(document.getElementById('createRoleModal')).hide();
+                let msg = `Role successfully ${action === 'edit' ? 'updated' : action === 'delete' ? 'deleted' : 'created'}!`;
+                showAlert(msg, 'success');
+                // Reset form if it was a creation/edit action
+                if (action !== 'delete') {
+                    document.getElementById('createRoleForm').reset();
+                }
+                const modalEl = document.getElementById('createRoleModal');
+                const modalInstance = bootstrap.Modal.getInstance(modalEl);
+                if (modalInstance) {
+                    modalInstance.hide();
+                }
+
                 loadRoles();
             } else {
-                showAlert(response.data.message || 'Failed to create role', 'danger');
+                showAlert(response.data.message || `Failed to ${action} role`, 'danger');
             }
         } catch (error) {
             showAlert('Error: ' + error.message, 'danger');

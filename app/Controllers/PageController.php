@@ -119,36 +119,6 @@ class PageController extends BaseController
         return view($view, $viewData);
     }
 
-    // private function requireAuth()
-    // {
-    //     $token = $this->request->getCookie('authToken');
-    //     if (!$token) {
-    //         return redirect()->to('/');
-    //     }
-
-    //     try {
-    //         Services::jwtDecoder($token);
-    //     } catch (\Exception $e) {
-    //         setcookie('authToken', '', time() - 3600, '/');
-    //         // return redirect()->to('/');
-    //     }
-    // }
-
-    // public function login()
-    // {
-    //     $token = $this->request->getCookie('authToken');
-    //     if ($token !== null) {
-    //         // Validate the token before redirecting
-    //         try {
-    //             Services::jwtDecoder($token);
-    //             return redirect()->to('/dashboard');
-    //         } catch (\Exception $e) {
-    //             // Invalid token, clear the cookie
-    //             setcookie('authToken', '', time() - 3600, '/');
-    //         }
-    //     }
-    //      return view('login');
-    // }
     public function login() {
     $token = $this->request->getCookie('authToken');
     
@@ -226,5 +196,12 @@ class PageController extends BaseController
     public function switchRole()
     {
         return $this->handlePage('switch-role');
+    }
+
+    /**
+     * Timesheet - Route to employee timesheet page
+     */
+    public function timesheet(){
+        return $this->handlePage('timesheet');
     }
 }

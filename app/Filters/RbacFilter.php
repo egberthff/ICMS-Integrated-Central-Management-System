@@ -21,7 +21,6 @@ class RbacFilter implements FilterInterface
         try {
             $token = str_replace('Bearer ', '', $authHeader);
             $decoded = Services::jwtDecoder($token); // Decodes token payload
-            log_message('error', 'Decoded token in RbacFilter: ' . print_r($decoded, true)); // Debug log for token contents
             // Inject decoded context directly into request for controller access
             $request->activeTokenContext = $decoded; 
         } catch (Exception $e) {

@@ -6,11 +6,38 @@ use CodeIgniter\Model;
 
 class PermissionModel extends Model
 {
-    protected $table            = 'permissions';
-    protected $primaryKey       = 'permission_id';
-    protected $useSoftDeletes   = false;
-    protected $protectFields    = true;
-    protected $allowedFields    = ['permission_key', 'description'];
+    protected $table = 'permissions';
+    protected $primaryKey = 'permission_id';
+
+    protected $useSoftDeletes = false;
+    protected $protectFields = true;
+    protected $allowedFields = ['permission_key', 'description'];
+
+    protected bool $allowEmptyInserts = false;
+    protected bool $updateOnlyChanged = true;
+
+    protected array $casts = [];
+    protected array $castHandlers = [];
+
+    protected $useTimestamps = false;
+    protected $dateFormat = 'datetime';
+    protected $createdField = 'created_at';
+    protected $updatedField = 'updated_at';
+    protected $deletedField = 'deleted_at';
+
+    protected $validationRules = [];
+    protected $validationMessages = [];
+    protected $skipValidation = false;
+    protected $cleanValidationRules = true;
+
+    protected $allowCallbacks = true;
+    protected $afterInsert = [];
+    protected $beforeUpdate = [];
+    protected $afterUpdate = [];
+    protected $beforeFind = [];
+    protected $afterFind = [];
+    protected $beforeDelete = [];
+    protected $afterDelete = [];
 
     // Get permission by key
     public function getPermissionByKey(string $permissionKey): ?array
@@ -27,10 +54,12 @@ class PermissionModel extends Model
     // Create a new permission
     public function createPermission(string $permissionKey, string $description = ''): bool
     {
-        return $this->insert([
+        $result = $this->insert([
             'permission_key' => $permissionKey,
-            'description'    => $description
+            'description' => $description
         ]);
+
+        return $result !== false;
     }
 
     // Delete permission
@@ -39,29 +68,5 @@ class PermissionModel extends Model
         return $this->delete($permissionId);
     }
 
-    protected bool $allowEmptyInserts = false;
-    protected bool $updateOnlyChanged = true;
 
-    protected array $casts = [];
-    protected array $castHandlers = [];
-
-    protected $useTimestamps = false;
-    protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
-
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
-    protected $skipValidation       = false;
-    protected $cleanValidationRules = true;
-
-    protected $allowCallbacks = true;
-    protected $afterInsert    = [];
-    protected $beforeUpdate   = [];
-    protected $afterUpdate    = [];
-    protected $beforeFind     = [];
-    protected $afterFind      = [];
-    protected $beforeDelete   = [];
-    protected $afterDelete    = [];
 }

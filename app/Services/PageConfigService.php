@@ -1,6 +1,6 @@
 <?php
 
-namespace  App\Services;
+namespace App\Services;
 
 /**
  * PageConfigService - Centralized configuration for all pages/menus
@@ -16,11 +16,11 @@ namespace  App\Services;
 class PageConfigService
 {
     /**
-      * Get page configuration by key
-      * 
-      * @param string $pageKey Unique identifier for the page (e.g., 'users', 'roles', 'dashboard')
-      * @return array|null Configuration array or null if not found
-      */
+     * Get page configuration by key
+     * 
+     * @param string $pageKey Unique identifier for the page (e.g., 'users', 'roles', 'dashboard')
+     * @return array|null Configuration array or null if not found
+     */
     public static function getPageConfig(string $pageKey): ?array
     {
         $pages = self::getPageConfigs();
@@ -28,10 +28,10 @@ class PageConfigService
     }
 
     /**
-      * Get all page configurations
-      * 
-      * @return array Array of all page configurations
-      */
+     * Get all page configurations
+     * 
+     * @return array Array of all page configurations
+     */
     public static function getPageConfigs(): array
     {
         return [
@@ -45,12 +45,22 @@ class PageConfigService
                 'routeUrl' => '/dashboard',
             ],
 
+            // Employee announcements (future feature)
+            'announcements' => [
+                'title' => 'Announcements',
+                'view' => 'employee/announcements',
+                'icon' => 'bi bi-bell',
+                'requiredRoles' => ['employee', 'payroll_employee'],
+                'dataHandler' => null,
+                'routeUrl' => '/employee/announcements',
+            ],
+
             // Admin pages - Users
             'users' => [
                 'title' => 'Users Management',
                 'view' => 'admin/users',
                 'icon' => 'bi bi-people',
-                'requiredRoles' => ['admin', 'payroll_admin', 'admin_manage'],
+                'requiredRoles' => ['admin', 'admin_manage'],
                 'dataHandler' => 'fetchUsersData',
                 'routeUrl' => '/admin/users',
             ],
@@ -60,7 +70,7 @@ class PageConfigService
                 'title' => 'Roles Management',
                 'view' => 'admin/roles',
                 'icon' => 'bi bi-shield-check',
-                'requiredRoles' => ['admin', 'payroll_admin', 'admin_manage'],
+                'requiredRoles' => ['admin', 'admin_manage'],
                 'dataHandler' => 'fetchRolesData',
                 'routeUrl' => '/admin/roles',
             ],
@@ -70,9 +80,29 @@ class PageConfigService
                 'title' => 'Permissions Management',
                 'view' => 'admin/permissions',
                 'icon' => 'bi bi-lock',
-                'requiredRoles' => ['admin', 'payroll_admin', 'admin_manage'],
+                'requiredRoles' => ['admin', 'admin_manage'],
                 'dataHandler' => 'fetchPermissionsData',
                 'routeUrl' => '/admin/permissions',
+            ],
+
+            // Employee timesheet
+            'timesheet' => [
+                'title' => 'Timesheet',
+                'view' => 'employee/timesheet',
+                'icon' => 'bi bi-clock',
+                'requiredRoles' => ['employee', 'payroll_admin'],
+                'dataHandler' => null, // No additional data needed for basic view
+                'routeUrl' => 'timesheet',
+            ],
+
+            // Employee payslip
+            'payslip' => [
+                'title' => 'My Payslip',
+                'view' => 'employee/payslip',
+                'icon' => 'bi bi-file-earmark-text',
+                'requiredRoles' => ['employee'],
+                'dataHandler' => null, // Payslip data loaded via AJAX in the view
+                'routeUrl' => '/payslip',
             ],
 
             // Role management
@@ -85,7 +115,6 @@ class PageConfigService
                 'routeUrl' => '/switch-role',
                 'requireMultipleRoles' => true, // Only show if user has > 1 role
             ],
-
             // Add more pages here as needed:
             // 'profile' => [...]
             // 'reports' => [...]
@@ -94,12 +123,12 @@ class PageConfigService
     }
 
     /**
-      * Check if a role has access to a page
-      * 
-      * @param string $pageKey Page identifier
-      * @param string $userRole User's active role
-      * @return bool True if user has access
-      */
+     * Check if a role has access to a page
+     * 
+     * @param string $pageKey Page identifier
+     * @param string $userRole User's active role
+     * @return bool True if user has access
+     */
     public static function canAccessPage(string $pageKey, string $userRole): bool
     {
         $config = self::getPageConfig($pageKey);
@@ -117,11 +146,11 @@ class PageConfigService
     }
 
     /**
-      * Get page key by route URL
-      * 
-      * @param string $routeUrl Route URL (e.g., '/admin/users')
-      * @return string|null Page key or null if not found
-      */
+     * Get page key by route URL
+     * 
+     * @param string $routeUrl Route URL (e.g., '/admin/users')
+     * @return string|null Page key or null if not found
+     */
     public static function getPageKeyByUrl(string $routeUrl): ?string
     {
         $pages = self::getPageConfigs();
@@ -134,12 +163,12 @@ class PageConfigService
     }
 
     /**
-      * Get all pages accessible to a specific role
-      * 
-      * @param string $activeRole User's active role
-      * @param int $totalRoles Total number of roles user has
-      * @return array Array of accessible pages [key => config]
-      */
+     * Get all pages accessible to a specific role
+     * 
+     * @param string $activeRole User's active role
+     * @param int $totalRoles Total number of roles user has
+     * @return array Array of accessible pages [key => config]
+     */
     public static function getAccessiblePages(string $activeRole, int $totalRoles = 1): array
     {
         $pages = self::getPageConfigs();

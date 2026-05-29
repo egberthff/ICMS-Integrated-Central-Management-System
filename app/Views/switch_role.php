@@ -5,7 +5,8 @@
 <div class="row mb-3">
     <div class="col-md-12">
         <h2>Switch Role</h2>
-        <p class="text-muted">Select a role to switch into. This will simulate your permissions as if you were that role.</p>
+        <p class="text-muted">Select a role to switch into. This will simulate your permissions as if you were that
+            role.</p>
         <div id="switchRoleAlert" class="alert d-none" role="alert"></div>
         <div class="list-group" id="rolesList">
 
@@ -23,12 +24,11 @@
             let userId = localStorage.getItem('user_id');
             const response = await fetch(`user/${userId}/roles`);
             const data = await response.json();
-            console.log('Roles data:', data);
             const rolesList = document.getElementById('rolesList');
             rolesList.innerHTML = '';
 
-            if (data.roles && data.roles.length > 0) {
-                data.roles.forEach(role => {
+            if (data.data.roles && data.data.roles.length > 0) {
+                data.data.roles.forEach(role => {
                     const roleItem = document.createElement('button');
                     roleItem.className = 'list-group-item list-group-item-action';
                     roleItem.textContent = `${role.role_name} (Criticality: ${role.criticality_level})`;
@@ -51,31 +51,29 @@
         if (!confirm(`Are you sure you want to switch to the "${roleName}" role?`)) {
             return;
         }
-
         try {
             const response = await fetch('/api/auth/switch-role', {
                 method: 'POST',
                 headers: {
-                     'Content-Type': 'application/json',
-                     'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-                     },
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                },
                 body: JSON.stringify({
-                     target_role: roleName,
-                     mfa_token: '123456' // In a real implementation, you would prompt the user for an MFA token if the target role is critical
-                     })
+                    target_role: roleName,
+                    mfa_token: '123456' // In a real implementation, you would prompt the user for an MFA token if the target role is critical
+                })
             });
 
             const data = await response.json();
             const alertBox = document.getElementById('switchRoleAlert');
-
             if (response.ok) {
                 alertBox.className = 'alert alert-success';
                 alertBox.textContent = `Successfully switched to "${roleName}" role. Redirecting to dashboard...`;
                 localStorage.setItem('activeRole', roleName);
 
-                if (data.token) {
-                    localStorage.setItem('authToken', data.token);
-                    document.cookie = `authToken=${encodeURIComponent(data.token)}; path=/; max-age=${60 * 60 * 24}`;
+                if (data.data.token) {
+                    localStorage.setItem('authToken', data.data.token);
+                    document.cookie = `authToken=${encodeURIComponent(data.data.token)}; path=/; max-age=${60 * 60 * 24}`;
                 }
 
                 setTimeout(() => {

@@ -3,94 +3,61 @@
 namespace App\Services;
 
 /**
- * MenuService - Dynamically returns menu items based on user role
- * 
- * Ensures:
- * - Dashboard always visible
- * - Switch Role only shows if user has multiple roles
- * - Admin menus (Users, Roles, Permissions) only for admin/payroll_admin roles
- * - Logout always visible
+ * MenuService - Builds sidebar menus from configuration
+ *
+ * DRY goals:
+ * - Avoid hardcoding menu items and role checks in PHP.
+ * - Render the same menu structure from PageConfigService.
+ * - Keep only the Logout action here.
  */
 class MenuService
 {
-     /**
-      * Get menu items for a specific role
-      * 
-      * @param string $activeRole Current active role
-      * @param int $totalRoles Total number of roles the user has
-      * @return array Array of menu items with label, icon, and url
-      */
+    /**
+     * @param string $activeRole
+     * @param int $totalRoles
+     * @return array<int, array<string, mixed>>
+     */
     public static function getMenus(string $activeRole, int $totalRoles = 1): array
     {
         $menus = [];
 
-        // 1. Dashboard - Always visible to all roles
-        $menus[] = [
-            'label' => 'Dashboard',
-            'icon' => 'bi bi-house-door',
-            'url' => '/dashboard',
-        ];
+        $pageConfigs = PageConfigService::getPageConfigs();
 
-        // 2. Admin-only menus (Users, Roles, Permissions)
-        // Only visible to admin and payroll_admin roles
-        if (self::isAdminRole($activeRole)) {
-            $menus[] = [
-                'label' => 'Users',
-                'icon' => 'bi bi-people',
-                'url' => '/admin/users',
-            ];
-
-            $menus[] = [
-                'label' => 'Roles',
-                'icon' => 'bi bi-shield-check',
-                'url' => '/admin/roles',
-            ];
-
-            $menus[] = [
-                'label' => 'Permissions',
-                'icon' => 'bi bi-lock',
-                'url' => '/admin/permissions',
-            ];
+        // Keep Dashboard first
+        if (isset($pageConfigs['dashboard']) && self::isPageAccessible($pageConfigs['dashboard'], $activeRole, $totalRoles)) {
+            $menus[] = self::toMenuItem($pageConfigs['dashboard']);
         }
 
-        if (self::isEmployeeRole($activeRole)){
-            $menus[] = [
-                'label' => 'My Payroll',
-                'icon' => 'bi bi-wallet2',
-                'url' => '/employee/payroll',
-            ];
-            $menus[] = [
-                'label' => 'Timesheet',
-                'icon' => 'bi bi-clock',
-                'url' => '/employee/timesheet',
-            ];
-            $menus[] = [
-                'label' => 'Announcements',
-                'icon' => 'bi bi-bell',
-                'url' => '/employee/announcements',
-            ];
+        // Add the rest of pages in config order (except dashboard)
+        foreach ($pageConfigs as $pageKey => $config) {
+            if ($pageKey === 'dashboard') {
+                continue;
+            }
+
+            if (!self::isPageAccessible($config, $activeRole, $totalRoles)) {
+                continue;
+            }
+
+            // Switch Role: insert separator only when it will be shown
+            if ($pageKey === 'switch-role') {
+                if ($totalRoles > 1) {
+                    $menus[] = ['type' => 'separator'];
+                    $menus[] = self::toMenuItem($config);
+                }
+                continue;
+            }
+
+            // All other pages
+            $menus[] = self::toMenuItem($config);
         }
 
-        // 3. Switch Role - Only visible if user has multiple roles
-        if ($totalRoles > 1) {
-            // Add separator before switch role
-            $menus[] = [
-                'type' => 'separator',
-            ];
+        // Separator before Logout if Switch Role didn't already add one
+        $hasSwitchRole = isset($pageConfigs['switch-role'])
+            && $totalRoles > 1
+            && self::isPageAccessible($pageConfigs['switch-role'], $activeRole, $totalRoles);
 
-            $menus[] = [
-                'label' => 'Switch Role',
-                'icon' => 'bi bi-lock',
-                'url' => '/switch-role',
-            ];
-        }
-
-        // 4. Logout - Always visible at the bottom
-        // Add separator if not already added
-        if ($totalRoles <= 1) {
-            $menus[] = [
-                'type' => 'separator',
-            ];
+        if (!$hasSwitchRole) {
+            $menus[] = ['type' => 'separator'];
         }
 
         $menus[] = [
@@ -103,21 +70,34 @@ class MenuService
         return $menus;
     }
 
-    /**
-      * Check if a role has admin privileges
-      * 
-      * @param string $role Role name
-      * @return bool True if role is admin or payroll_admin
-      */
-    private static function isAdminRole(string $role): bool
+    private static function isPageAccessible(array $config, string $activeRole, int $totalRoles): bool
     {
-        return in_array($role, ['admin', 'payroll_admin', 'admin_manage'], true);
+        if (!$config) {
+            return false;
+        }
+
+        // Role access
+        if (!empty($config['requiredRoles'])) {
+            if (!in_array($activeRole, $config['requiredRoles'], true)) {
+                return false;
+            }
+        }
+
+        // Multi-role requirement
+        if (!empty($config['requireMultipleRoles']) && $totalRoles <= 1) {
+            return false;
+        }
+
+        return true;
     }
 
-    private static function isEmployeeRole(string $role): bool
+    private static function toMenuItem(array $pageConfig): array
     {
-        return in_array($role, ['employee', 'payroll_employee'], true);
+        return [
+            'label' => $pageConfig['title'] ?? '',
+            'icon' => $pageConfig['icon'] ?? '',
+            'url' => $pageConfig['routeUrl'] ?? '#',
+        ];
     }
-
-
 }
+

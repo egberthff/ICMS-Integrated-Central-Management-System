@@ -6,11 +6,11 @@ use CodeIgniter\Model;
 
 class RoleModel extends Model
 {
-    protected $table            = 'roles';
-    protected $primaryKey       = 'role_id';
-    protected $useSoftDeletes   = false;
-    protected $protectFields    = true;
-    protected $allowedFields    = ['role_name', 'criticality_level'];
+    protected $table = 'roles';
+    protected $primaryKey = 'role_id';
+    protected $useSoftDeletes = false;
+    protected $protectFields = true;
+    protected $allowedFields = ['role_name', 'criticality_level'];
 
     // Get role by name
     public function getRoleByName(string $roleName): ?array
@@ -25,12 +25,30 @@ class RoleModel extends Model
     }
 
     // Create a new role
-    public function createRole(string $roleName, int $criticalityLevel = 1): bool
+    public function saveRoleData(string $roleName, int $criticalityLevel = 1, ?string $roleId = null, string $action): bool
     {
-        return $this->insert([
-            'role_name'         => $roleName,
+        if ($roleId && $action === 'delete') {
+            return $this->delete($roleId);
+        }
+
+        $data = [
+            'role_name' => $roleName,
             'criticality_level' => $criticalityLevel
-        ]);
+        ];
+
+        if ($roleId && $action === 'edit') {
+            return $this->update($roleId, $data);
+        }
+
+
+        // Otherwise, perform regular insert statement
+        return $this->insert($data) !== false;
+
+    }
+
+    public function updateRole(string $roleId, $updateData): bool
+    {
+        return $this->update($roleId, $updateData);
     }
 
     // Delete role
@@ -46,22 +64,22 @@ class RoleModel extends Model
     protected array $castHandlers = [];
 
     protected $useTimestamps = false;
-    protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+    protected $dateFormat = 'datetime';
+    protected $createdField = 'created_at';
+    protected $updatedField = 'updated_at';
+    protected $deletedField = 'deleted_at';
 
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
-    protected $skipValidation       = false;
+    protected $validationRules = [];
+    protected $validationMessages = [];
+    protected $skipValidation = false;
     protected $cleanValidationRules = true;
 
     protected $allowCallbacks = true;
-    protected $afterInsert    = [];
-    protected $beforeUpdate   = [];
-    protected $afterUpdate    = [];
-    protected $beforeFind     = [];
-    protected $afterFind      = [];
-    protected $beforeDelete   = [];
-    protected $afterDelete    = [];
+    protected $afterInsert = [];
+    protected $beforeUpdate = [];
+    protected $afterUpdate = [];
+    protected $beforeFind = [];
+    protected $afterFind = [];
+    protected $beforeDelete = [];
+    protected $afterDelete = [];
 }

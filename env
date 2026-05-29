@@ -16,7 +16,7 @@
 
 #CI_ENVIRONMENT = production
 CI_ENVIRONMENT = development
-JWT_SECRET_KEY = `X95GTUpmu2YO6ezA065JBOolos/ImQI1v4MV0AR4/Jg=`
+JWT_SECRET_KEY = X95GTUpmu2YO6ezA065JBOolos/ImQI1v4MV0AR4/Jg=
 
 #--------------------------------------------------------------------
 # APP

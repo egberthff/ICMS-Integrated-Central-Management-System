@@ -36,10 +36,10 @@ class Services extends BaseService
     public static function jwtEncoder(array $payload): string
     {
         $secretKey = env('JWT_SECRET_KEY', 'X95GTUpmu2YO6ezA065JBOolos/ImQI1v4MV0AR4/Jg=');
+
         // Add standard JWT timestamps to the passed data payload
         $payload['iat'] = time();
         $payload['exp'] = $payload['exp'] ?? (time() + 3600); // Default to 1 hour expiration
-
         return JWT::encode($payload, $secretKey, 'HS256');
     }
 

@@ -46,12 +46,15 @@
                 <form id="createPermissionForm">
                     <div class="mb-3">
                         <label for="permissionKey" class="form-label">Permission Key</label>
-                        <input type="text" class="form-control" id="permissionKey" placeholder="e.g., payroll:execute" required>
-                        <small class="form-text text-muted">Use format: module:action (e.g., payroll:execute, profile:read)</small>
+                        <input type="text" class="form-control" id="permissionKey" placeholder="e.g., payroll:execute"
+                            required>
+                        <small class="form-text text-muted">Use format: module:action (e.g., payroll:execute,
+                            profile:read)</small>
                     </div>
                     <div class="mb-3">
                         <label for="permissionDescription" class="form-label">Description</label>
-                        <textarea class="form-control" id="permissionDescription" placeholder="Brief description" rows="3"></textarea>
+                        <textarea class="form-control" id="permissionDescription" placeholder="Brief description"
+                            rows="3"></textarea>
                     </div>
                 </form>
             </div>
@@ -68,22 +71,22 @@
         try {
             const response = await apiCall('/api/v1/admin/permissions', 'GET');
             const tbody = document.getElementById('permissionsTableBody');
-            
+
             if (response.ok && response.data) {
                 tbody.innerHTML = '';
-                
-                for (const perm of response.data.data) {
+
+                for (const perm of response.data.data.permissions) {
                     const rolesUsing = await getPermissionRoles(perm.permission_id);
-                    
+
                     const row = `
                         <tr>
                             <td><code>${perm.permission_key}</code></td>
                             <td>${perm.description || '-'}</td>
                             <td>
-                                ${rolesUsing.length > 0 
-                                    ? rolesUsing.join(', ')
-                                    : '<span class="text-muted">Not assigned</span>'
-                                }
+                                ${rolesUsing.length > 0
+                            ? rolesUsing.join(', ')
+                            : '<span class="text-muted">Not assigned</span>'
+                        }
                             </td>
                             <td>
                                 <button class="btn btn-sm btn-danger" onclick="deletePermission('${perm.permission_id}')">
@@ -106,7 +109,7 @@
         try {
             const response = await apiCall('/api/v1/admin/roles', 'GET');
             const rolesUsing = [];
-            
+
             if (response.ok && response.data) {
                 for (const role of response.data.data) {
                     const permsResponse = await apiCall(`/api/v1/admin/roles/${role.role_id}/permissions`, 'GET');
@@ -115,7 +118,7 @@
                     }
                 }
             }
-            
+
             return rolesUsing;
         } catch (error) {
             console.error('Error getting permission roles:', error);

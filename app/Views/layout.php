@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,14 +12,17 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
         }
+
         .navbar-brand {
             font-weight: bold;
             font-size: 1.5rem;
         }
+
         .sidebar {
             min-height: 100vh;
             background-color: #2c3e50;
         }
+
         .sidebar a {
             color: #ecf0f1;
             padding: 12px 20px;
@@ -26,36 +30,44 @@
             border-left: 3px solid transparent;
             transition: all 0.3s;
         }
+
         .sidebar a:hover {
             background-color: #34495e;
             border-left-color: #3498db;
             color: #3498db;
         }
+
         .sidebar a.active {
             background-color: #3498db;
             border-left-color: #2980b9;
             color: white;
         }
+
         .main-content {
             background-color: white;
             min-height: 100vh;
         }
+
         .card {
             border: none;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
         }
+
         .btn-primary {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border: none;
         }
+
         .btn-primary:hover {
             background: linear-gradient(135deg, #5568d3 0%, #6a3a8b 100%);
         }
+
         .table-hover tbody tr:hover {
             background-color: #f5f5f5;
         }
     </style>
 </head>
+
 <body>
     <div class="container-fluid">
         <div class="row">
@@ -71,19 +83,18 @@
                         foreach ($menus as $menu):
                             // Handle separator type menus
                             if (isset($menu['type']) && $menu['type'] === 'separator'):
-                        ?>
+                                ?>
                                 <hr class="bg-secondary my-2">
-                        <?php
+                                <?php
                             else:
-                        ?>
+                                ?>
                                 <li class="nav-item">
-                                    <a class="nav-link <?= (strpos(current_url(), $menu['url']) !== false) ? 'active' : '' ?>" 
-                                       href="<?= $menu['url'] ?? '#' ?>"
-                                       <?php if (isset($menu['onclick'])): ?>onclick="<?= $menu['onclick'] ?>"<?php endif; ?>>
+                                    <a class="nav-link <?= (strpos(current_url(), $menu['url']) !== false) ? 'active' : '' ?>"
+                                        href="<?= $menu['url'] ?? '#' ?>" <?php if (isset($menu['onclick'])): ?>onclick="<?= $menu['onclick'] ?>" <?php endif; ?>>
                                         <i class="<?= $menu['icon'] ?? '' ?>"></i> <?= $menu['label'] ?? '' ?>
                                     </a>
                                 </li>
-                        <?php
+                                <?php
                             endif;
                         endforeach;
                         ?>
@@ -110,6 +121,8 @@
             </main>
         </div>
     </div>
+
+    <?= $this->renderSection('extra_scripts') ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -184,11 +197,12 @@
         }
 
         // Initialize user info on page load
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             const username = localStorage.getItem('username') || 'User';
             const activeRole = localStorage.getItem('activeRole') || 'employee';
             setUserInfo(username, activeRole);
         });
     </script>
 </body>
+
 </html>

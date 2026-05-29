@@ -46,11 +46,13 @@
                 <form id="createUserForm">
                     <div class="mb-3">
                         <label for="newUsername" class="form-label">Username (Email)</label>
-                        <input type="email" class="form-control" id="newUsername" placeholder="user@company.com" required>
+                        <input type="email" class="form-control" id="newUsername" placeholder="user@company.com"
+                            required>
                     </div>
                     <div class="mb-3">
                         <label for="newPassword" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="newPassword" placeholder="Enter password" required>
+                        <input type="password" class="form-control" id="newPassword" placeholder="Enter password"
+                            required>
                     </div>
                 </form>
             </div>
@@ -94,12 +96,12 @@
         try {
             const response = await apiCall('/api/v1/admin/users', 'GET');
             const tbody = document.getElementById('usersTableBody');
-            
+            console.log(response.data);
             if (response.ok && response.data) {
                 tbody.innerHTML = '';
-                for (const user of response.data.data) {
+                for (const user of response.data.data.users) {
                     const rolesResponse = await apiCall(`/api/v1/admin/users/${user.user_id}/roles`, 'GET');
-                    const roles = rolesResponse.ok ? rolesResponse.data.roles.map(r => r.role_name).join(', ') : '-';
+                    const roles = rolesResponse.ok ? rolesResponse.data.data.roles.map(r => r.role_name).join(', ') : '-';
                     const row = `
                         <tr>
                             <td>${user.username}</td>
@@ -110,10 +112,10 @@
                                 </span>
                             </td>
                             <td>
-                                <button class="btn btn-sm btn-info" data-action="assign" onclick="openAssignRoleModal('${user.user_id}', '${user.username}')">
+                                <button class="btn btn-sm btn-info" data-action="assign" onclick="openAssignRoleModal('${user.user_id}', '${user.username}', this.data)">
                                     <i class="bi bi-plus"></i> Add Role
                                 </button>
-                                <button class="btn btn-sm btn-warning" data-action="revoke" onclick="openAssignRoleModal('${user.user_id}', '${user.username}')">
+                                <button class="btn btn-sm btn-warning" data-action="revoke" onclick="openAssignRoleModal('${user.user_id}', '${user.username}', this.data)">
                                     <i class="bi bi-dash"></i> Remove Role
                                 </button>
                                 <button class="btn btn-sm btn-danger" onclick="deleteUser('${user.user_id}')">
@@ -132,19 +134,19 @@
         }
     }
 
-    async function loadRolesForAssignment(filter) {
+    async function loadRolesForAssignment(filter, action) {
         try {
             const response = await apiCall('/api/v1/admin/roles', 'GET');
             const select = document.getElementById('assignRoleSelect');
             select.innerHTML = '<option value="">Select a role</option>';
             const userId = document.getElementById('assignUserId').value;
             const userRolesResponse = await apiCall(`/api/v1/admin/users/${userId}/roles`, 'GET');
-            
-            if (response.ok && response.data) {
+
+            if (response.ok && response.data.data) {
                 if (filter === 'assign') {
                     // For assigning, show all roles
-                    const existingRoleNames = userRolesResponse.data.roles.map(ur => ur.role_name);
-                    const availableRoles = response.data.data.filter(role => 
+                    const existingRoleNames = userRolesResponse.data.data.roles.map(ur => ur.role_name);
+                    const availableRoles = response.data.data.roles.filter(role =>
                         !existingRoleNames.includes(role.role_name)
                     );
                     for (const role of availableRoles) {
@@ -153,7 +155,7 @@
                 } else if (filter === 'revoke') {
                     // For revoking, show only roles the user currently has
                     if (userRolesResponse.ok && userRolesResponse.data) {
-                        for (const role of userRolesResponse.data.roles) {
+                        for (const role of userRolesResponse.data.data.roles) {
                             select.innerHTML += `<option value="${role.role_id}">${role.role_name}</option>`;
                         }
                     }

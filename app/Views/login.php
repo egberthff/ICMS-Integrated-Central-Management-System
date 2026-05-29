@@ -98,14 +98,13 @@
                 const result = await response.json();
 
                 if (response.ok) {
-                    localStorage.setItem('authToken', result.token);
-                    localStorage.setItem('username', result.user.username);
-                    localStorage.setItem('activeRole', result.user.active_role);
-                    localStorage.setItem('user_id', result.user.user_id);
+                    localStorage.setItem('authToken', result.data.token);
+                    localStorage.setItem('username', result.data.user.username);
+                    localStorage.setItem('activeRole', result.data.user.active_role);
+                    localStorage.setItem('user_id', result.data.user.user_id);
                     
                     // Set cookie for page loads
-                    document.cookie = "authToken=" + result.token + "; path=/; max-age=86400"; // 24 hours
-                    
+                    document.cookie = "authToken=" + result.data.token + "; path=/; max-age=86400"; // 24 hours
                     window.location.href = '/dashboard';
                 } else {
                     showAlert(result.message || 'Login failed', 'danger');
