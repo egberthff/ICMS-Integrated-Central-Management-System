@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,36 +14,43 @@
             align-items: center;
             justify-content: center;
         }
+
         .login-container {
             width: 100%;
             max-width: 400px;
         }
+
         .login-card {
             border: none;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
         }
+
         .login-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             text-align: center;
             padding: 30px;
         }
+
         .form-control:focus {
             border-color: #667eea;
             box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
         }
+
         .btn-login {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border: none;
             padding: 10px;
             font-weight: bold;
         }
+
         .btn-login:hover {
             background: linear-gradient(135deg, #5568d3 0%, #6a3a8b 100%);
             color: white;
         }
     </style>
 </head>
+
 <body>
     <div class="login-container">
         <div class="card login-card">
@@ -54,7 +62,8 @@
                 <form id="loginForm" method="POST" action="/login">
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" placeholder="jane.doe@company.com" required>
+                        <input type="text" class="form-control" id="username" placeholder="jane.doe@company.com"
+                            required>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
@@ -80,7 +89,7 @@
             document.getElementById('alertContainer').innerHTML = alertHTML;
         }
 
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        document.getElementById('loginForm').addEventListener('submit', async function (e) {
             e.preventDefault();
 
             const username = document.getElementById('username').value;
@@ -102,9 +111,9 @@
                     localStorage.setItem('username', result.data.user.username);
                     localStorage.setItem('activeRole', result.data.user.active_role);
                     localStorage.setItem('user_id', result.data.user.user_id);
-                    
+
                     // Set cookie for page loads
-                    document.cookie = "authToken=" + result.data.token + "; path=/; max-age=86400"; // 24 hours
+                    // document.cookie = "authToken=" + result.data.token + "; path=/; max-age=86400"; // 24 hours
                     window.location.href = '/dashboard';
                 } else {
                     showAlert(result.message || 'Login failed', 'danger');
@@ -116,4 +125,5 @@
 
     </script>
 </body>
+
 </html>

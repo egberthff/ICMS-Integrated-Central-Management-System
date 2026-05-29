@@ -56,8 +56,9 @@
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                    // 'Authorization': `Bearer ${localStorage.getItem('authToken')}`
                 },
+                credentials: 'same-origin',
                 body: JSON.stringify({
                     target_role: roleName,
                     mfa_token: '123456' // In a real implementation, you would prompt the user for an MFA token if the target role is critical

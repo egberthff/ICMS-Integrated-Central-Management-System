@@ -6,6 +6,8 @@ use CodeIgniter\Config\BaseService;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Exception;
+use Firebase\JWT\ExpiredException;
+use Firebase\JWT\SignatureInvalidException;
 
 /**
  * Services Configuration file.
@@ -52,4 +54,22 @@ class Services extends BaseService
             throw new Exception('Invalid or expired token session.');
         }
     }
+
+    // public static function jwtDecoder(string $token): object
+    // {
+    //     $secretKey = env('JWT_SECRET_KEY');
+
+    //     try {
+    //         return JWT::decode($token, new Key($secretKey, 'HS256'));
+    //     } catch (ExpiredException $e) {
+    //         // Explicitly handle token expiration timestamps
+    //         throw new \Exception('Your session has expired. Please log in again.');
+    //     } catch (SignatureInvalidException $e) {
+    //         // Explicitly handle tampering or signature secret mismatch
+    //         throw new \Exception('Invalid token signature. Access denied.');
+    //     } catch (\Exception $e) {
+    //         // Capture structural errors (e.g. "Wrong number of segments")
+    //         throw new \Exception('Token decoding failed: ' . $e->getMessage());
+    //     }
+    // }
 }

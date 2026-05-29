@@ -12,26 +12,23 @@ class RbacFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        // 1. Extract token from Authorization header
-        $authHeader = $request->getServer('HTTP_AUTHORIZATION');
-        if (!$authHeader) {
-            return Services::response()->setJSON(['error' => 'Missing token'])->setStatusCode(401);
+
+        /** @var \CodeIgniter\HTTP\IncomingRequest $request */
+        $token = $request->getCookie('authToken');
+        if (!$token) {
+            return Services::response()->setJSON(['error' => 'Missing token session'])->setStatusCode(401);
         }
 
         try {
-            $token = str_replace('Bearer ', '', $authHeader);
             $decoded = Services::jwtDecoder($token); // Decodes token payload
             // Inject decoded context directly into request for controller access
-            $request->activeTokenContext = $decoded; 
+            $request->activeTokenContext = $decoded;
         } catch (Exception $e) {
             return Services::response()->setJSON(['error' => 'Invalid session token'])->setStatusCode(401);
         }
-
-        // 2. Check if route requires a specific permission argument
         if (!empty($arguments)) {
             // Replace pipe separator back to colon for permission check (e.g., 'payroll|execute' -> 'payroll:execute')
             $requiredPermission = str_replace('|', ':', $arguments[0]);
-
             // Enforce that active token array contains permission
             if (!in_array($requiredPermission, $decoded->permissions)) {
                 return Services::response()

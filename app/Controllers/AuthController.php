@@ -62,14 +62,14 @@ class AuthController extends BaseApiController
 
         return $this->apiSuccess([
             'message' => 'Login successful',
-            'token' => $jwt,
             'user' => [
                 'user_id' => $user['user_id'],
                 'username' => $user['username'],
                 'active_role' => $activeRole,
                 'permissions' => $permissions
             ]
-        ]);
+        ], 200, $jwt);
+
     }
     // POST /api/auth/switch-role
     public function switchRole()
@@ -79,16 +79,9 @@ class AuthController extends BaseApiController
             return $this->apiBadRequest('Invalid JSON payload');
         }
 
-        $authHeader = $this->getBearerToken();
-        if (!$authHeader) {
+        $decodedToken = $this->request->activeTokenContext ?? null;
+        if (!$decodedToken) {
             return $this->apiUnauthorized('Authorization token is required.');
-        }
-
-        $token = str_replace('Bearer ', '', $authHeader);
-        try {
-            $decodedToken = $this->decodeJwt($token);
-        } catch (\Exception $e) {
-            return $this->apiUnauthorized('Invalid session token.');
         }
         $userId = $decodedToken->sub ?? null;
         $targetRole = $data['target_role'] ?? null;

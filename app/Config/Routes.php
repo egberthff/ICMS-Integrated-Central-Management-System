@@ -9,17 +9,20 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'PageController::login');
 $routes->post('/login', 'AuthController::login', ['filter' => 'ratelimit']);
 
-// UI Routes (Protected)
-$routes->get('/switch-role', 'PageController::switchRole');
-$routes->get('/dashboard', 'PageController::dashboard');
-$routes->get('/timesheet', 'PageController::timesheet');
-$routes->get('/payslip', 'PageController::handlePage'); // Will be handled dynamically
+// UI Routes (Protected) - All handled by dynamic route
+// $routes->get('/switch-role', 'PageController::switchRole');
+// $routes->get('/dashboard', 'PageController::dashboard');
+// $routes->get('/timesheet', 'PageController::timesheet');
+// $routes->get('/payslip', 'PageController::handlePage'); // Will be handled dynamically
 
-// $routes->group('admin', ['filter' => 'rbc:admin|manage'], function($routes){
-$routes->get('admin/users', 'PageController::users');
-$routes->get('admin/roles', 'PageController::roles');
-$routes->get('admin/permissions', 'PageController::permissions');
-// });
+// $routes->get('/human-resource/add-new-employee', 'HumanResourceController::addNewEmployee');
+// $routes->get('/human-resource/add-new-employee', 'PageController::addNewEmployee');
+
+$routes->group('admin', ['filter' => 'rbac:admin|manage'], function ($routes) {
+    $routes->get('admin/users', 'PageController::index/$1');
+    $routes->get('admin/roles', 'PageController::index/$1');
+    $routes->get('admin/permissions', 'PageController::index/$1');
+});
 
 $routes->get('user/(:segment)/roles', 'AdminController::getUserRoles/$1');
 
@@ -33,13 +36,8 @@ $routes->group('api/v1/payroll', ['filter' => 'rbac:employee|view_payslip'], fun
     $routes->get('payslip/(:num)', 'PayrollController::viewPayslip/$1');
     $routes->get('payslips', 'PayrollController::listPayslips');
     $routes->get('latest-payslip', 'PayrollController::latestPayslip');
-});
-
-// Admin/Payroll API Routes (calculate payslips)
-$routes->group('api/v1/payroll', ['filter' => 'rbac:employee|view_payslip'], function ($routes) {
     $routes->post('calculate-payslip', 'PayrollAdminController::calculatePayslip');
 });
-
 
 // Protected Employee Routes
 $routes->group('api/v1/employee', ['filter' => 'rbac:timesheet|submit'], function ($routes) {
@@ -76,3 +74,6 @@ $routes->group('api/v1/admin', ['filter' => 'rbac:admin|manage'], function ($rou
     $routes->post('permissions/revoke', 'AdminController::removePermissionFromRole');
     $routes->delete('permissions/(:segment)', 'AdminController::deletePermission/$1');
 });
+
+//Dynamic route for rendering UI pages
+$routes->get('(:any)', 'PageController::index/$1');

@@ -45,6 +45,16 @@ class PageConfigService
                 'routeUrl' => '/dashboard',
             ],
 
+            //Adding new employee record
+            'add-new-employee' => [
+                'title' => 'Add New Employee',
+                'view' => 'human_resource/add_employee',
+                'icon' => 'bi bi-user',
+                'requiredRoles' => ['hr', 'admin', 'admin_manage', 'admin_manager'],
+                'dataHandler' => null,
+                'routeUrl' => '/human-resource/add-new-employee'
+            ],
+
             // Employee announcements (future feature)
             'announcements' => [
                 'title' => 'Announcements',

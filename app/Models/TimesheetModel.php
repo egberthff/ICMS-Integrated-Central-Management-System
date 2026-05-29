@@ -11,7 +11,7 @@ class TimesheetModel extends Model
     protected $primaryKey = 'timesheet_id';
     // protected $useAutoIncrement = false;
     protected $returnType = 'array';
-    protected $useSoftDeletes = true;
+    // protected $useSoftDeletes = true;
     protected $protectFields = true;
     protected $allowedFields = ['user_id', 'start_date', 'end_date', 'days_worked', 'regular_hours', 'ot_hours', 'night_diff', 'sick_leave', 'vac_leave', 'unpaid_leave', 'notes', 'status'];
 
@@ -26,7 +26,7 @@ class TimesheetModel extends Model
     protected $dateFormat = 'datetime';
     protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';
-    protected $deletedField = 'deleted_at';
+    // protected $deletedField = 'deleted_at';
 
     // Validation
     protected $validationRules = [];

@@ -11,6 +11,24 @@ use App\Services\PageDataService;
 class PageController extends BaseController
 {
     /**
+     * Single dynamic handler for all page views
+     * 
+     * @param string $fullPath Captured URL segment (e.g., 'dashboard', 'switch-role')
+     */
+    public function index(string ...$fullPath)
+    {
+        $cleanSegments = array_map('basename', $fullPath);
+
+        // Check for directory traversal attempts
+        if (in_array('..', $cleanSegments, true) || in_array('.', $cleanSegments, true)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+
+        $pageKey = end($cleanSegments);
+
+        return $this->handlePage($pageKey);
+    }
+    /**
      * Get authenticated user data (role, id, etc.)
      * Returns null if auth fails
      */
@@ -77,7 +95,6 @@ class PageController extends BaseController
         if (!$user) {
             return redirect()->to('/');
         }
-
         // Get page configuration
         $pageConfig = PageConfigService::getPageConfig($pageKey);
         if (!$pageConfig) {
@@ -86,13 +103,14 @@ class PageController extends BaseController
 
         // Check access permissions
         if (!PageConfigService::canAccessPage($pageKey, $user['activeRole'])) {
-            // Special case for pages that require multiple roles
-            if (isset($pageConfig['requireMultipleRoles']) && $pageConfig['requireMultipleRoles']) {
-                if ($user['totalRoles'] <= 1) {
-                    return redirect()->to('/dashboard')->with('error', 'You must have multiple roles to access this page');
-                }
-            } else {
-                return redirect()->to('/dashboard')->with('error', 'You do not have access to this page');
+            // User doesn't have the required role
+            return redirect()->to('/dashboard')->with('error', 'You do not have access to this page');
+        }
+
+        // Special case for pages that require multiple roles
+        if (isset($pageConfig['requireMultipleRoles']) && $pageConfig['requireMultipleRoles']) {
+            if ($user['totalRoles'] <= 1) {
+                return redirect()->to('/dashboard')->with('error', 'You must have multiple roles to access this page');
             }
         }
 
@@ -119,89 +137,90 @@ class PageController extends BaseController
         return view($view, $viewData);
     }
 
-    public function login() {
-    $token = $this->request->getCookie('authToken');
-    
-    if ($token !== null) {
-        try {
-            // Validate JWT and check expiration
-            $payload = Services::jwtDecoder($token);
-            
-            // Optional: Check for required roles/claims
-            if (!isset($payload['role']) || $payload['role'] !== 'user') {
-                throw new \Exception('Invalid token claims');
+    public function login()
+    {
+        $token = $this->request->getCookie('authToken');
+
+        if ($token !== null) {
+            try {
+                // Validate JWT and check expiration
+                $payload = Services::jwtDecoder($token);
+
+                // Optional: Check for required roles/claims
+                if (!isset($payload['role']) || $payload['role'] !== 'user') {
+                    throw new \Exception('Invalid token claims');
+                }
+
+                // Set secure session data if needed
+                session()->set(['user_id' => $payload['sub']]);
+
+                return redirect()->to('/dashboard');
+            } catch (\Exception $e) {
+                // Log the invalid token attempt
+                log_message('warning', 'Invalid JWT login attempt: ' . $e->getMessage());
+
+                // Clear the invalid cookie
+                setcookie(
+                    'authToken',
+                    '',
+                    [
+                        'expires' => time() - 3600,
+                        'path' => '/',
+                        'secure' => true, // Only send over HTTPS
+                        'httponly' => true, // Prevent JavaScript access
+                        'samesite' => 'Strict'
+                    ]
+                );
             }
-            
-            // Set secure session data if needed
-            session()->set(['user_id' => $payload['sub']]);
-            
-            return redirect()->to('/dashboard');
-        } catch (\Exception $e) {
-            // Log the invalid token attempt
-            log_message('warning', 'Invalid JWT login attempt: ' . $e->getMessage());
-            
-            // Clear the invalid cookie
-            setcookie(
-                'authToken', 
-                '', 
-                [
-                    'expires' => time() - 3600,
-                    'path' => '/',
-                    'secure' => true, // Only send over HTTPS
-                    'httponly' => true, // Prevent JavaScript access
-                    'samesite' => 'Strict'
-                ]
-            );
         }
+
+        return view('login');
     }
-    
-    return view('login');
-}
 
     /**
      * Dashboard - Route to dynamic handler
      */
-    public function dashboard()
-    {
-        return $this->handlePage('dashboard');
-    }
+    // public function dashboard()
+    // {
+    //     return $this->handlePage('dashboard');
+    // }
 
     /**
      * Users Management - Route to dynamic handler
      */
-    public function users()
-    {
-        return $this->handlePage('users');
-    }
+    // public function users()
+    // {
+    //     return $this->handlePage('users');
+    // }
 
     /**
      * Roles Management - Route to dynamic handler
      */
-    public function roles()
-    {
-        return $this->handlePage('roles');
-    }
+    // public function roles()
+    // {
+    //     return $this->handlePage('roles');
+    // }
 
     /**
      * Permissions Management - Route to dynamic handler
      */
-    public function permissions()
-    {
-        return $this->handlePage('permissions');
-    }
+    // public function permissions()
+    // {
+    //     return $this->handlePage('permissions');
+    // }
 
     /**
      * Switch Role - Route to dynamic handler
      */
-    public function switchRole()
-    {
-        return $this->handlePage('switch-role');
-    }
+    // public function switchRole()
+    // {
+    //     return $this->handlePage('switch-role');
+    // }
 
     /**
      * Timesheet - Route to employee timesheet page
      */
-    public function timesheet(){
-        return $this->handlePage('timesheet');
-    }
+    // public function timesheet(){
+    //     return $this->handlePage('timesheet');
+    // }
 }
