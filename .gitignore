@@ -18,5 +18,6 @@ application/logs/*
 /vendor/
 
 #codeigniter 4
+writable/*
 writable/logs/*
 !writable/logs/index.html
