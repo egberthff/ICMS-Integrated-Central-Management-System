@@ -50,7 +50,8 @@
             <div class="card-body">
                 <a href="/admin/users" class="btn btn-primary me-2"><i class="bi bi-plus-circle"></i> Manage Users</a>
                 <a href="/admin/roles" class="btn btn-success me-2"><i class="bi bi-plus-circle"></i> Manage Roles</a>
-                <a href="/admin/permissions" class="btn btn-warning"><i class="bi bi-plus-circle"></i> Manage Permissions</a>
+                <a href="/admin/permissions" class="btn btn-warning"><i class="bi bi-plus-circle"></i> Manage
+                    Permissions</a>
             </div>
         </div>
     </div>
@@ -61,22 +62,22 @@
         try {
             // Load users count
             const usersResponse = await apiCall('/api/v1/admin/users', 'GET');
-            if (usersResponse.ok && usersResponse.data && usersResponse.data.data) {
-                document.getElementById('totalUsers').textContent = usersResponse.data.data.length;
+            if (usersResponse.ok && usersResponse.data.data && usersResponse.data.data.users) {
+                document.getElementById('totalUsers').textContent = usersResponse.data.data.users.length;
             }
-            
+
             // Load roles count
             const rolesResponse = await apiCall('/api/v1/admin/roles', 'GET');
-            if (rolesResponse.ok && rolesResponse.data && rolesResponse.data.data) {
-                document.getElementById('totalRoles').textContent = rolesResponse.data.data.length;
+            if (rolesResponse.ok && rolesResponse.data.data && rolesResponse.data.data.roles) {
+                document.getElementById('totalRoles').textContent = rolesResponse.data.data.roles.length;
             }
-            
+
             // Load permissions count
             const permsResponse = await apiCall('/api/v1/admin/permissions', 'GET');
-            if (permsResponse.ok && permsResponse.data && permsResponse.data.data) {
-                document.getElementById('totalPermissions').textContent = permsResponse.data.data.length;
+            if (permsResponse.ok && permsResponse.data.data && permsResponse.data.data.permissions) {
+                document.getElementById('totalPermissions').textContent = permsResponse.data.data.permissions.length;
             }
-            
+
             // Load current user role
             const userRole = localStorage.getItem('activeRole') || 'employee';
             document.getElementById('yourRole').textContent = userRole.toUpperCase();

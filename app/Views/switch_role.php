@@ -72,11 +72,6 @@
                 alertBox.textContent = `Successfully switched to "${roleName}" role. Redirecting to dashboard...`;
                 localStorage.setItem('activeRole', roleName);
 
-                if (data.data.token) {
-                    localStorage.setItem('authToken', data.data.token);
-                    document.cookie = `authToken=${encodeURIComponent(data.data.token)}; path=/; max-age=${60 * 60 * 24}`;
-                }
-
                 setTimeout(() => {
                     window.location.href = '/dashboard';
                 }, 1000);

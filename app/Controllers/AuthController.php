@@ -71,6 +71,14 @@ class AuthController extends BaseApiController
         ], 200, $jwt);
 
     }
+
+    //POST logout
+    public function logout()
+    {
+        return $this->apiSuccess([
+            'message' => "Logout successful",
+        ], 200, "");
+    }
     // POST /api/auth/switch-role
     public function switchRole()
     {
@@ -143,8 +151,7 @@ class AuthController extends BaseApiController
 
         return $this->apiSuccess([
             'message' => 'Switched to ' . $targetRole . ' mode successfully.',
-            'token' => $jwt
-        ]);
+        ], 200, $jwt);
     }
 
     private function verifyMFA($userId, $token)

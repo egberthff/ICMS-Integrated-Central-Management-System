@@ -44,7 +44,8 @@
                             </select>
                         </div>
                         <div class="col-md-3 d-flex align-items-end">
-                            <button type="submit" class="btn btn-primary w-100"><i class="bi bi-search me-1"></i> Apply Filter</button>
+                            <button type="submit" class="btn btn-primary w-100"><i class="bi bi-search me-1"></i> Apply
+                                Filter</button>
                         </div>
                     </div>
                 </form>
@@ -83,18 +84,21 @@
 <div class="text-center py-5" id="noPayslipsMessage" style="display: none;">
     <i class="bi bi-file-earmark-text display-4 text-muted mb-3"></i>
     <h5 class="text-muted">No payslips found</h5>
-    <p class="text-muted">You don't have any payslips available yet. Payslips are typically generated after each pay period.</p>
+    <p class="text-muted">You don't have any payslips available yet. Payslips are typically generated after each pay
+        period.</p>
 </div>
 
 <!-- Payslip Detail Modal -->
-<div class="modal fade" id="payslipDetailModal" tabindex="-1" aria-labelledby="payslipDetailModalLabel" aria-hidden="true">
+<div class="modal fade" id="payslipDetailModal" tabindex="-1" aria-labelledby="payslipDetailModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title" id="payslipDetailModalLabel">
                     <i class="bi bi-file-earmark-text me-2"></i>Payslip Details
                 </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
             <div class="modal-body" id="payslipDetailBody">
                 <!-- Payslip detail content will be loaded here -->
@@ -107,8 +111,10 @@
             </div>
             <div class="modal-footer bg-light">
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="printPayslipBtn"><i class="bi bi-printer me-1"></i> Print</button>
-                <button type="button" class="btn btn-success" id="downloadPayslipBtn"><i class="bi bi-download me-1"></i> Download PDF</button>
+                <button type="button" class="btn btn-primary" id="printPayslipBtn"><i class="bi bi-printer me-1"></i>
+                    Print</button>
+                <button type="button" class="btn btn-success" id="downloadPayslipBtn"><i
+                        class="bi bi-download me-1"></i> Download PDF</button>
             </div>
         </div>
     </div>
@@ -125,72 +131,70 @@
             this.currentPayslipId = null;
             this.init();
         }
-        
+
         init() {
             this.loadPayslips();
             this.bindEvents();
         }
-        
+
         bindEvents() {
             // Filter button
             document.getElementById('filterBtn').addEventListener('click', () => {
                 const filterCard = document.getElementById('filterCard');
                 filterCard.style.display = filterCard.style.display === 'none' ? 'block' : 'none';
             });
-            
+
             // Filter form submission
             document.getElementById('payslipFilterForm').addEventListener('submit', (e) => {
                 e.preventDefault();
                 this.loadPayslips(true); // Apply filters
             });
-            
+
             // Print button
             document.getElementById('printPayslipBtn').addEventListener('click', () => {
                 window.print();
             });
-            
+
             // Download PDF button
             document.getElementById('downloadPayslipBtn').addEventListener('click', () => {
                 this.downloadPayslipPdf();
             });
         }
-        
+
         async loadPayslips(applyFilters = false) {
             try {
                 // Show loading state
                 document.querySelector('#payslipTable tbody').innerHTML = `
                     <tr><td colspan="7" class="text-center text-muted">Loading payslips...</td></tr>
                 `;
-                
+
                 // Build query parameters
                 const params = new URLSearchParams();
                 params.append('limit', 50);
-                
+
                 if (applyFilters) {
                     const startDate = document.getElementById('filter_start_date').value;
                     const endDate = document.getElementById('filter_end_date').value;
                     const status = document.getElementById('filter_status').value;
-                    
+
                     if (startDate) params.append('start_date', startDate);
                     if (endDate) params.append('end_date', endDate);
                     if (status) params.append('status', status);
                 }
-                
+
                 // Fetch payslips
                 const response = await fetch(`${this.apiBase}/payslips?${params.toString()}`, {
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-                    }
+                    credentials: "same-origin"
                 });
-                
+
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
-                
+
                 const result = await response.json();
-                
-                if (result.payslips && result.payslips.length > 0) {
-                    this.renderPayslipTable(result.payslips);
+                console.log(result.data.payslips);
+                if (result.data.payslips && result.data.payslips.length > 0) {
+                    this.renderPayslipTable(result.data.payslips);
                     document.getElementById('noPayslipsMessage').style.display = 'none';
                 } else {
                     document.querySelector('#payslipTable tbody').innerHTML = `
@@ -198,7 +202,7 @@
                     `;
                     document.getElementById('noPayslipsMessage').style.display = 'block';
                 }
-                
+
             } catch (error) {
                 console.error('Error loading payslips:', error);
                 this.showAlert('danger', 'Failed to load payslips. Please try again later.');
@@ -207,15 +211,15 @@
                 `;
             }
         }
-        
+
         renderPayslipTable(payslips) {
             const tbody = document.querySelector('#payslipTable tbody');
-            
+
             tbody.innerHTML = payslips.map(payslip => {
                 const statusBadge = this.getStatusBadge(payslip.status);
                 const formattedDate = new Date(payslip.date_issued).toLocaleDateString();
                 const period = `${new Date(payslip.pay_period_start).toLocaleDateString()} - ${new Date(payslip.pay_period_end).toLocaleDateString()}`;
-                
+
                 return `
                     <tr>
                         <td>${period}</td>
@@ -236,7 +240,7 @@
                 `;
             }).join('');
         }
-        
+
         getStatusBadge(status) {
             const statusMap = {
                 'draft': 'bg-secondary',
@@ -245,7 +249,7 @@
                 'paid': 'bg-success',
                 'rejected': 'bg-danger'
             };
-            
+
             const statusText = {
                 'draft': 'Draft',
                 'pending': 'Pending',
@@ -253,46 +257,44 @@
                 'paid': 'Paid',
                 'rejected': 'Rejected'
             };
-            
+
             return `<span class="badge ${statusMap[status] || 'bg-secondary'}">${statusText[status] || status}</span>`;
         }
-        
+
         async viewPayslip(id) {
             try {
                 this.currentPayslipId = id;
-                
+
                 const response = await fetch(`${this.apiBase}/payslip/${id}`, {
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-                    }
+                    credentials: "same-origin"
                 });
-                
+
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
-                
+
                 const result = await response.json();
-                this.renderPayslipDetail(result.payslip);
-                
+                this.renderPayslipDetail(result.data.payslip);
+
                 // Show modal
                 const modal = new bootstrap.Modal(document.getElementById('payslipDetailModal'));
                 modal.show();
-                
+
             } catch (error) {
                 console.error('Error loading payslip detail:', error);
                 this.showAlert('danger', 'Failed to load payslip details.');
             }
         }
-        
+
         renderPayslipDetail(payslip) {
             const body = document.getElementById('payslipDetailBody');
-            
+
             // Format dates
             const issuedDate = new Date(payslip.date_issued).toLocaleDateString();
             const periodStart = new Date(payslip.pay_period_start).toLocaleDateString();
             const periodEnd = new Date(payslip.pay_period_end).toLocaleDateString();
             const paymentDate = payslip.payment_date ? new Date(payslip.payment_date).toLocaleDateString() : 'Not set';
-            
+
             body.innerHTML = `
                 <!-- Company Info -->
                 <div class="mb-4">
@@ -473,7 +475,7 @@
                 ` : ''}
             `;
         }
-        
+
         getStatusClass(status) {
             const statusMap = {
                 'draft': 'bg-secondary',
@@ -484,7 +486,7 @@
             };
             return statusMap[status] || 'bg-secondary';
         }
-        
+
         getStatusText(status) {
             const statusMap = {
                 'draft': 'Draft',
@@ -495,13 +497,13 @@
             };
             return statusMap[status] || status;
         }
-        
+
         async downloadPayslip(id) {
             try {
                 // In a real implementation, this would generate and download a PDF
                 // For now, we'll show a message
                 this.showAlert('info', 'PDF download feature coming soon!');
-                
+
                 // Alternative: Open print view
                 const printWindow = window.open('', '_blank');
                 printWindow.document.write(`
@@ -534,21 +536,21 @@
                 printWindow.document.close();
                 printWindow.focus();
                 printWindow.print();
-                
+
             } catch (error) {
                 console.error('Error downloading payslip:', error);
                 this.showAlert('danger', 'Failed to download payslip.');
             }
         }
-        
+
         downloadPayslipPdf() {
             this.downloadPayslip(this.currentPayslipId);
         }
-        
+
         showAlert(type, message) {
             const alertsContainer = document.getElementById('payslipAlerts');
             const alertId = `alert_${Date.now()}`;
-            
+
             alertsContainer.innerHTML += `
                 <div id="${alertId}" class="alert alert-${type} alert-dismissible fade show mt-3" role="alert">
                     <i class="bi bi-${type === 'danger' ? 'exclamation-triangle' : type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'} me-2"></i>
@@ -556,7 +558,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             `;
-            
+
             // Auto remove after 5 seconds
             setTimeout(() => {
                 const alert = document.getElementById(alertId);
@@ -566,7 +568,7 @@
             }, 5000);
         }
     }
-    
+
     // Initialize payslip manager when DOM is loaded
     document.addEventListener('DOMContentLoaded', () => {
         window.payslipManager = new PayslipManager();

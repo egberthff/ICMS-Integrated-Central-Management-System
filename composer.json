@@ -1,14 +1,8 @@
 {
     "name": "codeigniter4/framework",
-    "description": "The CodeIgniter framework v4",
+    "description": "Identity & Credential Management System",
     "license": "MIT",
     "type": "project",
-    "homepage": "https://codeigniter.com",
-    "support": {
-        "forum": "https://forum.codeigniter.com/",
-        "source": "https://github.com/codeigniter4/CodeIgniter4",
-        "slack": "https://codeigniterchat.slack.com"
-    },
     "require": {
         "php": "^8.2",
         "ext-intl": "*",

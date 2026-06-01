@@ -38,17 +38,25 @@ class PayslipModel extends Model
     ];
 
     protected $useTimestamps = true;
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
+    protected $createdField = 'created_at';
+    protected $updatedField = 'updated_at';
 
     // Get payslips for a specific employee
-    public function getEmployeePayslips($employeeId, $limit = null, $offset = null)
+    public function getEmployeePayslips($employeeId, $filters)
     {
         $builder = $this->where('employee_id', $employeeId)
-                       ->orderBy('pay_period_end', 'DESC');
+            ->orderBy('pay_period_end', 'DESC');
 
-        if ($limit !== null) {
-            $builder->limit($limit, $offset);
+        if (isset($filters['limit']) && $filters['limit']) {
+            $builder->limit($filters['limit'], $filters['offset']);
+        }
+
+        if (isset($filters['start_date']) && $filters['start_date']) {
+            $builder->where('pay_period_start >=', $filters['start_date']);
+        }
+
+        if (isset($filters['end_date']) && $filters['end_date']) {
+            $builder->where('pay_period_end <=', $filters['end_date']);
         }
 
         return $builder->get()->getResultArray();
@@ -64,8 +72,8 @@ class PayslipModel extends Model
     public function getLatestPayslip($employeeId)
     {
         return $this->where('employee_id', $employeeId)
-                   ->orderBy('pay_period_end', 'DESC')
-                   ->first();
+            ->orderBy('pay_period_end', 'DESC')
+            ->first();
     }
 
     // Search payslips with filters
@@ -86,7 +94,7 @@ class PayslipModel extends Model
         }
 
         return $builder->orderBy('pay_period_end', 'DESC')
-                      ->get()
-                      ->getResultArray();
+            ->get()
+            ->getResultArray();
     }
 }

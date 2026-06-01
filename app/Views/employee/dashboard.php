@@ -44,14 +44,20 @@
                     aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="text-center py-4">
+                <!-- <div class="text-center py-4">
                     <div class="spinner-border text-success" role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>
                     <p class="mt-3">Loading your recent payslips...</p>
-                </div>
+                </div> -->
                 <div id="payslipList">
                     <!-- Payslip items will be loaded here -->
+                    <div class="text-center py-4">
+                        <div class="spinner-border text-success" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-3">Loading your recent payslips...</p>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer bg-light">
@@ -236,17 +242,15 @@
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${authToken}`
                 },
+                credentials: 'same-origin',
                 body: JSON.stringify(payload)
             });
-            console.log(response);
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
 
             const result = await response.json();
-            console.log("Success:", result);
             alert("Timesheet submitted successfully!");
 
             // Close the modal upon successful transaction completion
@@ -311,9 +315,8 @@
 
     async function generateLatestPayslip() {
         try {
-            const authToken = localStorage.getItem('authToken');
             const userId = localStorage.getItem('user_id');
-            if (!authToken || !userId) {
+            if (!userId) {
                 throw new Error('Session expired. Please log in again.');
             }
 
@@ -329,8 +332,8 @@
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${authToken}`
                 },
+                credentials: "same-origin",
                 body: JSON.stringify({
                     employee_id: userId,
                     pay_period_start: startDate,
@@ -369,9 +372,7 @@
             `;
 
             const response = await fetch("/api/v1/payroll/latest-payslip", {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-                }
+                credentials: "same-origin"
             });
 
             // Helpful debug logs if it fails (RBAC/401/403/etc)
@@ -383,18 +384,15 @@
                 console.error('Non-JSON response from latest-payslip:', rawText);
             }
 
-            console.log('latest-payslip status:', response.status);
-            console.log('latest-payslip body:', result || rawText);
-
             if (!result) {
                 throw new Error('Empty/invalid JSON response from latest-payslip');
             }
 
-            if (result.payslip) {
-                const payslip = result.payslip;
+            if (result.data.payslip) {
+                const payslip = result.data.payslip;
                 const formattedDate = new Date(payslip.date_issued).toLocaleDateString();
                 const period = `${new Date(payslip.pay_period_start).toLocaleDateString()} - ${new Date(payslip.pay_period_end).toLocaleDateString()}`;
-
+                payslipList.innerHTML = '';
                 payslipList.innerHTML = `
                     <div class="card mb-3">
                         <div class="card-body">

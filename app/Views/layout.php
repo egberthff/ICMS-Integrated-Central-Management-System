@@ -126,27 +126,33 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function getAuthToken() {
-            return localStorage.getItem('authToken');
-        }
-
-        function setAuthToken(token) {
-            localStorage.setItem('authToken', token);
-        }
-
         function setUserInfo(username, activeRole) {
             document.getElementById('currentUser').textContent = `${username} (${activeRole})`;
             localStorage.setItem('username', username);
             localStorage.setItem('activeRole', activeRole);
         }
 
-        function logout() {
-            localStorage.removeItem('authToken');
-            localStorage.removeItem('username');
-            localStorage.removeItem('activeRole');
-            // Clear cookie
-            document.cookie = "authToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;";
-            window.location.href = '/';
+        async function logout() {
+            try {
+
+                const response = await fetch('/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'same-origin'
+                });
+                const result = await response.json();
+
+                if (response.ok) {
+                    localStorage.removeItem('activeRole');
+                    localStorage.removeItem('user_id');
+                    localStorage.removeItem('username');
+                    window.location.href = '/';
+                }
+            } catch (error) {
+                showAlert('Error: ' + error.message, 'danger');
+            }
         }
 
         function showAlert(message, type = 'success') {
@@ -170,8 +176,8 @@
                 method: method,
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + getAuthToken()
-                }
+                },
+                credentials: 'same-origin',
             };
 
             if (data) {

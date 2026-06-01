@@ -55,26 +55,32 @@ class PayrollController extends BaseApiController
     public function listPayslips()
     {
         $userId = $this->request->activeTokenContext->user_id ?? ($this->request->activeTokenContext->sub ?? null);
+
         if (!$userId) {
             return $this->apiUnauthorized('Invalid session');
         }
 
         // Get query parameters for filtering and pagination
-        $limit = $this->request->getGet('limit', 10);
-        $offset = $this->request->getGet('offset', 0);
+        $limit = (int) $this->request->getGet('limit') ?? 10;
+        $offset = (int) $this->request->getGet('offset') ?? 0;
         $startDate = $this->request->getGet('start_date');
         $endDate = $this->request->getGet('end_date');
         $status = $this->request->getGet('status');
 
         $filters = [];
+        if ($limit) {
+            $filters['limit'] = $limit;
+        }
+        // if ($offset) {
+        $filters['offset'] = $offset;
+        // }
         if ($startDate)
             $filters['start_date'] = $startDate;
         if ($endDate)
             $filters['end_date'] = $endDate;
         if ($status)
             $filters['status'] = $status;
-
-        $payslips = $this->payslipModel->getEmployeePayslips($userId, $limit, $offset);
+        $payslips = $this->payslipModel->getEmployeePayslips($userId, $filters);
 
         // Get total count for pagination
         $totalCount = $this->payslipModel->searchPayslips($userId, $filters);

@@ -377,15 +377,13 @@
     }
 
     async function postJson(path, payload) {
-        const authToken = localStorage.getItem('authToken');
-        if (!authToken) throw new Error('Session expired. Please log in again.');
 
         const res = await fetch(path, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authToken}`
             },
+            credentials: 'same-origin',
             body: JSON.stringify(payload)
         });
 
@@ -434,6 +432,7 @@
     }
 
     function populatePreview(pv, readiness) {
+        console.log(pv);
         document.getElementById('previewCard').style.display = 'block';
 
         const warningsEl = document.getElementById('previewWarnings');
@@ -557,7 +556,6 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         // default to last 15 days
-        console.log('Script loaded');
         const now = new Date();
         const end = now.toISOString().slice(0, 10);
         const startDate = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);

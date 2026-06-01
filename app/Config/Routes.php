@@ -1,4 +1,5 @@
 <?php
+use App\Controllers\AuthController;
 use CodeIgniter\Router\RouteCollection;
 
 /**
@@ -8,6 +9,7 @@ use CodeIgniter\Router\RouteCollection;
 // Public Routes
 $routes->get('/', 'PageController::login');
 $routes->post('/login', 'AuthController::login', ['filter' => 'ratelimit']);
+$routes->post('/logout', 'AuthController::logout', ['filter' => 'ratelimit']);
 
 // UI Routes (Protected) - All handled by dynamic route
 // $routes->get('/switch-role', 'PageController::switchRole');

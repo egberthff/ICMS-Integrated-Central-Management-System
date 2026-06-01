@@ -69,7 +69,7 @@ class Employee extends Migration
         $this->forge->addForeignKey('user_id', 'users', 'user_id', 'CASCADE', 'CASCADE');
 
         // Create table (per requirement)
-        $this->forge->createTable('employeed');
+        $this->forge->createTable('employees');
     }
 
     public function down()

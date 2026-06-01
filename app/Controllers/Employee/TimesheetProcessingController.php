@@ -122,6 +122,8 @@ class TimesheetProcessingController extends BaseApiController
             'end_date' => $data['pay_period_end'],
         ])->first();
 
+        log_message('error', print_r($timesheet, true));
+
         $readiness = [
             'timesheet_found' => (bool) $timesheet,
             'timesheet_status' => $timesheet['status'] ?? null,

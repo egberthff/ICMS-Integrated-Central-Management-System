@@ -38,7 +38,7 @@ class PageConfigService
             // Dashboard pages
             'dashboard' => [
                 'title' => 'Dashboard',
-                'view' => 'admin/dashboard', // Dynamic based on DashboardService
+                'view' => 'payroll/dashboard', // Dynamic based on DashboardService
                 'icon' => 'bi bi-house-door',
                 'requiredRoles' => [], // Empty = all roles
                 'dataHandler' => null, // No additional data needed

@@ -107,7 +107,6 @@
                 const result = await response.json();
 
                 if (response.ok) {
-                    localStorage.setItem('authToken', result.data.token);
                     localStorage.setItem('username', result.data.user.username);
                     localStorage.setItem('activeRole', result.data.user.active_role);
                     localStorage.setItem('user_id', result.data.user.user_id);

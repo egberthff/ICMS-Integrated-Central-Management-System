@@ -18,12 +18,10 @@ class PageController extends BaseController
     public function index(string ...$fullPath)
     {
         $cleanSegments = array_map('basename', $fullPath);
-
         // Check for directory traversal attempts
         if (in_array('..', $cleanSegments, true) || in_array('.', $cleanSegments, true)) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
-
         $pageKey = end($cleanSegments);
 
         return $this->handlePage($pageKey);
@@ -41,6 +39,7 @@ class PageController extends BaseController
 
         try {
             $decodedToken = Services::jwtDecoder($token);
+
             $userId = $decodedToken->sub ?? null;
             $activeRole = $decodedToken->active_role ?? 'employee';
 

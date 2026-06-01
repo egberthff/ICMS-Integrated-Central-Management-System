@@ -130,24 +130,66 @@ abstract class BaseApiController extends BaseController
             $response['data'] = $data;
         }
 
-        // Prepare the CI4 response object
         $finalResponse = $this->respond($response, $httpCode);
 
-        // If a token exists, attach it as an HttpOnly cookie
-        if ($token !== null) {
+        // If token is explicitly passed as empty string, delete the cookie
+        if ($token === "") {
+            $finalResponse = $finalResponse->setCookie([
+                'name' => 'authToken',
+                'value' => '',
+                'expire' => -3600, // Expires the cookie immediately
+                'path' => '/',
+                'secure' => false, // Set to true in production
+                'httponly' => true,
+                'samesite' => 'Lax'
+            ]);
+        }
+        // If a valid token string is provided, set the cookie
+        elseif ($token !== null) {
             $finalResponse = $finalResponse->setCookie([
                 'name' => 'authToken',
                 'value' => $token,
-                'expire' => 86400,          // 24 hours in seconds
+                'expire' => 86400,
                 'path' => '/',
-                'secure' => false,           // Set to true in production (Requires HTTPS)
-                'httponly' => true,           // Prevents JavaScript access
-                'samesite' => 'Lax'           // Protects against CSRF attacks
+                'secure' => false,
+                'httponly' => true,
+                'samesite' => 'Lax'
             ]);
         }
 
         return $finalResponse;
     }
+
+
+    // protected function apiSuccess(array $data = [], int $httpCode = 200, ?string $token = null)
+    // {
+    //     $response = [
+    //         'status' => $httpCode,
+    //         'message' => 'Success',
+    //     ];
+
+    //     if (!empty($data)) {
+    //         $response['data'] = $data;
+    //     }
+
+    //     // Prepare the CI4 response object
+    //     $finalResponse = $this->respond($response, $httpCode);
+
+    //     // If a token exists, attach it as an HttpOnly cookie
+    //     if ($token !== null) {
+    //         $finalResponse = $finalResponse->setCookie([
+    //             'name' => 'authToken',
+    //             'value' => $token,
+    //             'expire' => 86400,          // 24 hours in seconds
+    //             'path' => '/',
+    //             'secure' => false,           // Set to true in production (Requires HTTPS)
+    //             'httponly' => true,           // Prevents JavaScript access
+    //             'samesite' => 'Lax'           // Protects against CSRF attacks
+    //         ]);
+    //     }
+
+    //     return $finalResponse;
+    // }
 
 
     /**
