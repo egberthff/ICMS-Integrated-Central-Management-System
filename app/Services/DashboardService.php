@@ -7,16 +7,16 @@ class DashboardService
     public static function resolve(string $activeRole): array
     {
         return match ($activeRole) {
-            'admin', 'payroll_admin' => [
-                'view' => 'admin/dashboard',
-                'title' => 'Admin Dashboard'
+            'payroll', 'payroll_admin' => [
+                'view' => 'payroll/dashboard',
+                'title' => 'Payroll Dashboard'
             ],
             'employee' => [
                 'view' => 'employee/dashboard',
                 'title' => 'Employee Dashboard'
             ],
-            'manager' => [
-                'view' => 'manager/dashboard',
+            'Admin' => [
+                'view' => 'administrator/dashboard',
                 'title' => 'Manager Dashboard'
             ],
             default => [
