@@ -6,10 +6,10 @@ use CodeIgniter\Model;
 
 class UserRoleModel extends Model
 {
-    protected $table            = 'user_roles';
-    protected $useSoftDeletes   = false;
-    protected $protectFields    = true;
-    protected $allowedFields    = ['user_id', 'role_id', 'assigned_at'];
+    protected $table = 'user_roles';
+    protected $useSoftDeletes = false;
+    protected $protectFields = true;
+    protected $allowedFields = ['user_id', 'role_id', 'assigned_at'];
 
     // Assign a role to a user
     public function assignRoleToUser(string $userId, string $roleId): bool
@@ -24,20 +24,22 @@ class UserRoleModel extends Model
         }
 
         $result = $this->insert([
-            'user_id'    => $userId,
-            'role_id'    => $roleId,
+            'user_id' => $userId,
+            'role_id' => $roleId,
             'assigned_at' => date('Y-m-d H:i:s')
         ]);
 
-        return $result !== false; 
+        return $result !== false;
     }
 
     // Remove a role from a user
     public function removeRoleFromUser(string $userId, string $roleId): bool
     {
-        return $this->where('user_id', $userId)
+        $result = $this->where('user_id', $userId)
             ->where('role_id', $roleId)
             ->delete();
+
+        return $result !== false;
     }
 
     // Get all roles for a specific user (with role details)
@@ -67,22 +69,22 @@ class UserRoleModel extends Model
     protected array $castHandlers = [];
 
     protected $useTimestamps = false;
-    protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+    protected $dateFormat = 'datetime';
+    protected $createdField = 'created_at';
+    protected $updatedField = 'updated_at';
+    protected $deletedField = 'deleted_at';
 
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
-    protected $skipValidation       = false;
+    protected $validationRules = [];
+    protected $validationMessages = [];
+    protected $skipValidation = false;
     protected $cleanValidationRules = true;
 
     protected $allowCallbacks = true;
-    protected $afterInsert    = [];
-    protected $beforeUpdate   = [];
-    protected $afterUpdate    = [];
-    protected $beforeFind     = [];
-    protected $afterFind      = [];
-    protected $beforeDelete   = [];
-    protected $afterDelete    = [];
+    protected $afterInsert = [];
+    protected $beforeUpdate = [];
+    protected $afterUpdate = [];
+    protected $beforeFind = [];
+    protected $afterFind = [];
+    protected $beforeDelete = [];
+    protected $afterDelete = [];
 }

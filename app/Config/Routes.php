@@ -20,10 +20,10 @@ $routes->post('/logout', 'AuthController::logout', ['filter' => 'ratelimit']);
 // $routes->get('/human-resource/add-new-employee', 'HumanResourceController::addNewEmployee');
 // $routes->get('/human-resource/add-new-employee', 'PageController::addNewEmployee');
 
-$routes->group('admin', ['filter' => 'rbac:admin|manage'], function ($routes) {
-    $routes->get('admin/users', 'PageController::index/$1');
-    $routes->get('admin/roles', 'PageController::index/$1');
-    $routes->get('admin/permissions', 'PageController::index/$1');
+$routes->group('administrator', ['filter' => 'rbac:admin|manage'], function ($routes) {
+    $routes->get('administrator/users', 'PageController::index/$1');
+    $routes->get('administrator/roles', 'PageController::index/$1');
+    $routes->get('administrator/permissions', 'PageController::index/$1');
 });
 
 $routes->get('user/(:segment)/roles', 'AdminController::getUserRoles/$1');
@@ -75,6 +75,12 @@ $routes->group('api/v1/admin', ['filter' => 'rbac:admin|manage'], function ($rou
     $routes->post('permissions/assign', 'AdminController::assignPermissionToRole');
     $routes->post('permissions/revoke', 'AdminController::removePermissionFromRole');
     $routes->delete('permissions/(:segment)', 'AdminController::deletePermission/$1');
+});
+
+// Human Resource Routes
+$routes->group('api/v1/human-resource', ['filter' => 'rbac:hr|add_employee'], function ($routes) {
+    //Employee records management
+    $routes->post('store', 'HumanResourceController::addNewEmployee');
 });
 
 //Dynamic route for rendering UI pages

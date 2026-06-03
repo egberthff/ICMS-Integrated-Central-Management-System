@@ -26,9 +26,41 @@
                 </tr>
             </thead>
             <tbody id="usersTableBody">
-                <tr>
-                    <td colspan="4" class="text-center text-muted">Loading...</td>
-                </tr>
+                <?php
+                if (!empty($users)):
+                    foreach ($users as $user): ?>
+                        <tr>
+                            <td><?= $user['username'] ?></td>
+                            <?php $roles = isset($user['roles']) && $user['roles']
+                                ? implode(', ', array_map(fn($r) => $r['role_name'], $user['roles']))
+                                : "No roles";
+                            ?>
+                            <td><?= $roles ?? "No roles" ?></td>
+                            <td>
+                                <span class="badge <?php echo $user['is_active'] ? 'bg-success' : 'bg-danger' ?>">
+                                    <?php echo $user['is_active'] ? 'Active' : 'Inactive' ?>
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-info" data-action="assign"
+                                    onclick="openAssignRoleModal('<?= $user['user_id'] ?>', '<?= $user['username'] ?>', this.data)">
+                                    <i class="bi bi-plus"></i> Add Role
+                                </button>
+                                <button class="btn btn-sm btn-warning" data-action="revoke"
+                                    onclick="openAssignRoleModal('<?= $user['user_id'] ?>', '<?= $user['username'] ?>', this.data)">
+                                    <i class="bi bi-dash"></i> Remove Role
+                                </button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteUser('<?= $user['user_id'] ?>')">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    <?php endforeach;
+                else: ?>
+                    <tr>
+                        <td colspan="4" class="text-center">No users found</td>
+                    </tr>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>
@@ -46,13 +78,13 @@
                 <form id="createUserForm">
                     <div class="mb-3">
                         <label for="newUsername" class="form-label">Username (Email)</label>
-                        <input type="email" class="form-control" id="newUsername" placeholder="user@company.com"
-                            required>
+                        <input type="email" class="form-control" autocomplete="new-username" id="newUsername"
+                            placeholder="user@company.com" required>
                     </div>
                     <div class="mb-3">
                         <label for="newPassword" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="newPassword" placeholder="Enter password"
-                            required>
+                        <input type="password" class="form-control" autocomplete="new-password" id="newPassword"
+                            placeholder="Enter password" required>
                     </div>
                 </form>
             </div>
@@ -156,6 +188,7 @@
                     // For revoking, show only roles the user currently has
                     if (userRolesResponse.ok && userRolesResponse.data) {
                         for (const role of userRolesResponse.data.data.roles) {
+                            console.log(userRolesResponse.data.data.roles);
                             select.innerHTML += `<option value="${role.role_id}">${role.role_name}</option>`;
                         }
                     }
@@ -167,6 +200,7 @@
     }
 
     function openAssignRoleModal(userId, username) {
+
         document.getElementById('assignUserId').value = userId;
         const action = event.target.getAttribute('data-action') || 'assign'; // Default to assign if not specified
         loadRolesForAssignment(action);
@@ -252,7 +286,7 @@
         }
     }
 
-    window.addEventListener('load', loadUsers);
+    // window.addEventListener('load', loadUsers);
 </script>
 
 <?= $this->endSection() ?>

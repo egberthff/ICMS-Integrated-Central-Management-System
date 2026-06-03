@@ -63,7 +63,6 @@ class EmployeeController extends BaseApiController
             if (!$timesheetModel->insert($requestData)) {
                 return $this->apiServerError('Database transaction processing failed');
             }
-            log_message('error', print_r($timesheetModel, true));
             $authHeader = $this->getBearerToken();
             return $this->apiSuccess([
                 'message' => 'Timesheet validated and processed successfully.',
@@ -71,7 +70,6 @@ class EmployeeController extends BaseApiController
             ]);
 
         } catch (\Exception $e) {
-            log_message('error', print_r($e, true));
             return $this->apiServerError('Database transaction processing failed.');
         }
     }

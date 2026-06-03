@@ -132,7 +132,6 @@ class PageController extends BaseController
         $viewData = array_merge([
             'title' => $pageConfig['title'],
         ], $pageData, $menuData);
-
         return view($view, $viewData);
     }
 

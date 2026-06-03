@@ -26,7 +26,7 @@
             const data = await response.json();
             const rolesList = document.getElementById('rolesList');
             rolesList.innerHTML = '';
-
+            console.log(data);
             if (data.data.roles && data.data.roles.length > 0) {
                 data.data.roles.forEach(role => {
                     const roleItem = document.createElement('button');
@@ -70,11 +70,11 @@
             if (response.ok) {
                 alertBox.className = 'alert alert-success';
                 alertBox.textContent = `Successfully switched to "${roleName}" role. Redirecting to dashboard...`;
-                localStorage.setItem('activeRole', roleName);
 
                 setTimeout(() => {
                     window.location.href = '/dashboard';
                 }, 1000);
+                localStorage.setItem('activeRole', roleName);
             } else {
                 alertBox.className = 'alert alert-danger';
                 alertBox.textContent = data.message || 'Failed to switch roles. Please try again.';

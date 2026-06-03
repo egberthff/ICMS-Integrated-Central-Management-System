@@ -62,12 +62,13 @@
                 <form id="loginForm" method="POST" action="/login">
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" placeholder="jane.doe@company.com"
-                            required>
+                        <input type="text" class="form-control" id="username" autocomplete="username"
+                            placeholder="jane.doe@company.com" required>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+                        <input type="password" class="form-control" id="password" autocomplete="current-password"
+                            placeholder="Enter password" required>
                     </div>
                     <button type="submit" class="btn btn-login w-100 text-white mb-3">Login</button>
                 </form>

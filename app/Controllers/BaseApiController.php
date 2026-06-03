@@ -105,20 +105,6 @@ abstract class BaseApiController extends BaseController
      * @param int $httpCode HTTP status code (default: 200)
      * @return \CodeIgniter\HTTP\ResponseInterface
      */
-    // protected function apiSuccess(array $data = [], int $httpCode = 200)
-    // {
-    //     $response = [
-    //         'status' => $httpCode,
-    //         'message' => 'Success',
-    //     ];
-
-    //     if (!empty($data)) {
-    //         $response['data'] = $data;
-    //     }
-
-    //     return $this->respond($response, $httpCode);
-    // }
-
     protected function apiSuccess(array $data = [], int $httpCode = 200, ?string $token = null)
     {
         $response = [
@@ -159,38 +145,6 @@ abstract class BaseApiController extends BaseController
 
         return $finalResponse;
     }
-
-
-    // protected function apiSuccess(array $data = [], int $httpCode = 200, ?string $token = null)
-    // {
-    //     $response = [
-    //         'status' => $httpCode,
-    //         'message' => 'Success',
-    //     ];
-
-    //     if (!empty($data)) {
-    //         $response['data'] = $data;
-    //     }
-
-    //     // Prepare the CI4 response object
-    //     $finalResponse = $this->respond($response, $httpCode);
-
-    //     // If a token exists, attach it as an HttpOnly cookie
-    //     if ($token !== null) {
-    //         $finalResponse = $finalResponse->setCookie([
-    //             'name' => 'authToken',
-    //             'value' => $token,
-    //             'expire' => 86400,          // 24 hours in seconds
-    //             'path' => '/',
-    //             'secure' => false,           // Set to true in production (Requires HTTPS)
-    //             'httponly' => true,           // Prevents JavaScript access
-    //             'samesite' => 'Lax'           // Protects against CSRF attacks
-    //         ]);
-    //     }
-
-    //     return $finalResponse;
-    // }
-
 
     /**
      * Standardized created response
@@ -244,6 +198,16 @@ abstract class BaseApiController extends BaseController
     protected function apiUnauthorized(string $message = 'Unauthorized')
     {
         return $this->failUnauthorized($message);
+    }
+
+    /**
+     * Standardized forbidden response
+     * @param string $message Error message (default: 'Forbidden')
+     * @return \CodeIgniter\HTTP\ResponseInterface
+     */
+    protected function apiForbidden(string $message = 'Fobidden')
+    {
+        return $this->failForbidden($message);
     }
 
     /**

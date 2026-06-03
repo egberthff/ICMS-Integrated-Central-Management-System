@@ -10,7 +10,9 @@
                     <h4 class="mb-0"><?= $title ?></h4>
                 </div>
                 <div class="card-body">
-                    <form action="/employee/store" method="POST" class="needs-validation" novalidate>
+                    <div id="add-new-employee-alert" class="alert d-none" role="alert"></div>
+                    <form action="/api/v1/human-resource/store" method="POST" id='add-new-employee-form'
+                        class="needs-validation" novalidate>
 
                         <!-- User ID Link -->
                         <div class="mb-3">
@@ -73,5 +75,52 @@
         </div>
     </div>
 </div>
+
+<script>
+    // document.addEventListener('DOMContentLoaded', function () {
+
+    document.getElementById('add-new-employee-form').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        try {
+            const formDataInstance = new FormData(this);
+            const formPayload = Object.fromEntries(formDataInstance.entries());
+            console.log(formPayload);
+            const response = await fetch('/api/v1/human-resource/store', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8',
+                    // 'X-Requested-With': 'XMLHttpRequest'
+                },
+                credentials: "same-origin",
+                body: JSON.stringify(formPayload)
+            });
+
+            const result = await response.json();
+            const alertBox = document.getElementById('add-new-employee-alert');
+            if (response.ok) {
+                alertBox.className = 'alert alert-success';
+                alertBox.textContent = `Employee [${result.data.data.last_name}, ${result.data.data.first_name}] has been recorded successfuly.`
+
+                setTimeout(() => {
+                    window.reload();
+                }, 500);
+            } else {
+                alertBox.className = 'alert alert-danger';
+                alertBox.textContent = data.message || 'Failed to add employee. Please try again.';
+            }
+            alertBox.classList.remove('d-none');
+        } catch (error) {
+            showAlert('Error: ' + error.message, 'danger');
+            const alertBox = document.getElementById('add-new-employee-alert');
+            alertBox.className = 'alert alert-danger';
+            alertBox.textContent = 'An error occurred while storing records. Please try again later.';
+            alertBox.classList.remove('d-none');
+        }
+    });
+
+
+    // });
+</script>
 
 <?= $this->endSection() ?>

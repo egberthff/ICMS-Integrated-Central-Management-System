@@ -15,9 +15,9 @@ class DashboardService
                 'view' => 'employee/dashboard',
                 'title' => 'Employee Dashboard'
             ],
-            'Admin' => [
+            'admin_manage' => [
                 'view' => 'administrator/dashboard',
-                'title' => 'Manager Dashboard'
+                'title' => 'Administrator Dashboard'
             ],
             default => [
                 'view' => 'dashboard',

@@ -7,12 +7,12 @@ use CodeIgniter\Model;
 class EmployeeModel extends Model
 {
     protected $table = 'employees';
-    protected $primaryKey = 'id';
-    protected $useAutoIncrement = true;
+    protected $primaryKey = 'employee_id';
+    // protected $useAutoIncrement = true;
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
     protected $protectFields = true;
-    protected $allowedFields = [];
+    protected $allowedFields = ['user_id', 'employee_number', 'first_name', 'last_name', 'position_title', 'employment_status'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -21,7 +21,7 @@ class EmployeeModel extends Model
     protected array $castHandlers = [];
 
     // Dates
-    protected $useTimestamps = false;
+    protected $useTimestamps = true;
     protected $dateFormat = 'datetime';
     protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';
@@ -44,5 +44,11 @@ class EmployeeModel extends Model
     protected $beforeDelete = [];
     protected $afterDelete = [];
 
+    public function insert($row = null, bool $returnID = true)
+    {
+        $result = parent::insert($row, $returnID);
+
+        return $result !== false;
+    }
 
 }

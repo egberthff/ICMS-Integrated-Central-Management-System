@@ -49,10 +49,20 @@ class PageConfigService
             'add-new-employee' => [
                 'title' => 'Add New Employee',
                 'view' => 'human_resource/add_employee',
-                'icon' => 'bi bi-user',
+                'icon' => 'bi bi-person-add',
                 'requiredRoles' => ['hr', 'admin', 'admin_manage', 'admin_manager'],
                 'dataHandler' => null,
                 'routeUrl' => '/human-resource/add-new-employee'
+            ],
+
+            //Viewing employee list
+            'view-employeelist' => [
+                'title' => 'List of Employees',
+                'view' => 'human_resource/view_employee_list',
+                'icom' => 'bi bi-company',
+                'requiredRoles' => ['hr', 'admin', 'admin_mange', 'admin_manager'],
+                'dataHandler' => 'fetchEmployeeList',
+                'routeUrl' => 'human-resource/view-emnployee-list'
             ],
 
             // Employee announcements (future feature)
@@ -68,31 +78,31 @@ class PageConfigService
             // Admin pages - Users
             'users' => [
                 'title' => 'Users Management',
-                'view' => 'admin/users',
+                'view' => 'administrator/users',
                 'icon' => 'bi bi-people',
                 'requiredRoles' => ['admin', 'admin_manage'],
                 'dataHandler' => 'fetchUsersData',
-                'routeUrl' => '/admin/users',
+                'routeUrl' => '/administrator/users',
             ],
 
             // Admin pages - Roles
             'roles' => [
                 'title' => 'Roles Management',
-                'view' => 'admin/roles',
+                'view' => 'administrator/roles',
                 'icon' => 'bi bi-shield-check',
                 'requiredRoles' => ['admin', 'admin_manage'],
                 'dataHandler' => 'fetchRolesData',
-                'routeUrl' => '/admin/roles',
+                'routeUrl' => '/administrator/roles',
             ],
 
             // Admin pages - Permissions
             'permissions' => [
                 'title' => 'Permissions Management',
-                'view' => 'admin/permissions',
+                'view' => 'administrator/permissions',
                 'icon' => 'bi bi-lock',
                 'requiredRoles' => ['admin', 'admin_manage'],
                 'dataHandler' => 'fetchPermissionsData',
-                'routeUrl' => '/admin/permissions',
+                'routeUrl' => '/administrator/permissions',
             ],
 
             // Employee timesheet

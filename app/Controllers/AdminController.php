@@ -221,15 +221,25 @@ class AdminController extends BaseApiController
     public function getUserRoles($userId)
     {
         $userModel = new UserModel();
-        $userRoleModel = new UserRoleModel();
 
-        // Verify user exists
-        $user = $userModel->find($userId);
-        if (!$user) {
+        // Fetch user and roles in a single database query execution
+        $userData = $userModel->getUsersWithRoles($userId);
+
+        // If the array is empty, the user does not exist
+        if (empty($userData)) {
             return $this->apiNotFound('User not found.');
         }
 
-        $roles = $userRoleModel->getUserRoles($userId);
+        $roles = [];
+
+        // Extract all roles from the joint results array
+        foreach ($userData['roles'] as $role) {
+            $roles[] = [
+                'role_id' => $role['role_id'] ?? null,
+                'role_name' => $role['role_name'] ?? null,
+                'criticality_level' => $role['criticality_level'] ?? null
+            ];
+        }
 
         return $this->apiSuccess([
             'user_id' => $userId,

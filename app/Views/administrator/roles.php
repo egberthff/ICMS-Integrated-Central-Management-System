@@ -27,9 +27,51 @@
                 </tr>
             </thead>
             <tbody id="rolesTableBody">
-                <tr>
+                <?php
+                if (!empty($roles)):
+                    foreach ($roles as $role): ?>
+                        <tr>
+                            <td><strong><?= $role['role_name'] ?></strong></td>
+                            <td><span
+                                    class="badge <?php echo ($role['criticality_level'] <= 1) ? 'bg-success' : (($role['criticality_level'] <= 3) ? 'bg-warning' : 'bg-danger'); ?>">
+                                    Level <?= $role['criticality_level'] ?>
+                                </span></td>
+                            <?php
+                            $formattedPermissions = isset($role['permissions']) && !empty($role['permissions'])
+                                ? implode(', ', $role['permissions'])
+                                : "No permissions";
+                            ?>
+                            <td><?= htmlspecialchars($formattedPermissions) ?></td>
+                            <td>
+                                <button class="btn btn-sm btn-info" data-action="assign"
+                                    onclick="openAssignPermissionModal('<?= $role['role_id'] ?>', '<?= $role['role_name'] ?>')">
+                                    <i class="bi bi-plus"></i> Add Permission
+                                </button>
+                                <button class="btn btn-sm btn-warning" data-action="revoke"
+                                    onclick="openAssignPermissionModal('<?= $role['role_id'] ?>', '<?= $role['role_name'] ?>')">
+                                    <i class="bi bi-dash"></i> Remove Permission
+                                </button>
+                                <button class="btn btn-sm btn-success" data-action="edit" data-bs-toggle="modal"
+                                    data-bs-target="#createRoleModal"
+                                    onclick="openManageRoleModal('<?= $role['role_id'] ?>', '<?= $role['role_name'] ?>', this)">
+                                    <i class="bi bi-plus"></i> Edit
+                                </button>
+                                <button class="btn btn-sm btn-danger" data-action="delete"
+                                    onclick="saveRole('delete','<?= $role['role_id'] ?>')">
+                                    <i class="bi bi-trash"></i> Remove role
+                                </button>
+                            </td>
+                        </tr>
+
+                    <?php endforeach;
+                else: ?>
+                    <tr>
+                        <td colspan="4" class="text-center">No Records Found</td>
+                    </tr>
+                    <!-- <tr>
                     <td colspan="4" class="text-center text-muted">Loading...</td>
-                </tr>
+                </tr> -->
+                <?php endif; ?>
             </tbody>
         </table>
     </div>
@@ -273,7 +315,7 @@
         }
     }
 
-    window.addEventListener('load', loadRoles);
+    // window.addEventListener('load', loadRoles);
 </script>
 
 <?= $this->endSection() ?>
